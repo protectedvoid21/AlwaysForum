@@ -21,4 +21,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Services\AlwaysForum.Services\AlwaysForum.Services.csproj" />
+    <ProjectReference Include="..\..\Web\AlwaysForum.csproj" />
+  </ItemGroup>
+
 </Project>
