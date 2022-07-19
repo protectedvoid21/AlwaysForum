@@ -12,6 +12,7 @@ public class AccountController : Controller {
 
     public AccountController(UserManager<ForumUser> userManager, SignInManager<ForumUser> signInManager, RoleManager<IdentityRole> roleManager) {
         this.userManager = userManager;
+        this.signInManager = signInManager;
         this.roleManager = roleManager;
     }
 
@@ -24,7 +25,7 @@ public class AccountController : Controller {
             return View(loginModel);
         }
 
-        var user = await userManager.FindByEmailAsync(loginModel.Email);
+        var user = await userManager.FindByNameAsync(loginModel.UserName);
         await signInManager.PasswordSignInAsync(user, loginModel.Password, true, false);
 
         return RedirectToAction("Index", "Home");

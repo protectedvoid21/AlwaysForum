@@ -1,0 +1,17 @@
+﻿@model Data.ViewModels.Account.LoginViewModel
+
+<h2>Login</h2>
+<form method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <span asp-validation-for="UserName"></span>
+        <label asp-for="UserName"></label><br/>
+        <input asp-for="UserName"/>
+    </div>
+    <div class="mb-3">
+        <span asp-validation-for="Password"></span>
+        <label asp-for="Password"></label><br/>
+        <input asp-for="Password" class="input-group-sm"/>
+    </div>
+    <input class="btn btn-info" type="submit" value="Login"/>
+</form>

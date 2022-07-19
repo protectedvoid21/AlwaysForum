@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 namespace Data; 
 
 public static class GlobalConstants {
-    public static string AdminUserName = "Admin";
-    public static string AdminPassword = "Admin123";
+    public const string AdminUserName = "Admin";
+    public const string AdminPassword = "Admin123";
+    public const string AdminRoleName = "Admin";
+    public const string AdminEmail = "admin@AlwaysForum.com";
 
-    public static string[] RequiredRoles = { "Admin", "Moderator", "User" };
+    public static readonly string[] RequiredRoles = { "Moderator", "User" };
 }

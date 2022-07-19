@@ -19,7 +19,7 @@ public class ForumDbContextSeeder : ISeeder {
 
         var seeders = new List<ISeeder> {
             new RoleSeeder(),
-            new UserSeeder(),
+            new AdminSeeder(),
         };
 
         foreach (var seeder in seeders) {
