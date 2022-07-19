@@ -1,5 +1,5 @@
+using AlwaysForum.Extensions;
 using Data.Models;
-using Data.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +8,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ForumDbContext>(config =>
     config.UseSqlServer(builder.Configuration.GetConnectionString("ForumDatabase")));
 builder.Services.AddIdentity();
+builder.Services.AddServices();
 
 var app = builder.Build();
 
@@ -22,6 +23,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.SeedDatabase();
 
 app.MapControllerRoute(
     name: "default",

@@ -9,11 +9,17 @@
 </head>
 <body>
 <header>
-    <div class="top-container">
-        <div class="logo-container">
+    <div style="width: 85%" class="d-flex m-auto">
+        <div class="me-auto logo-container">
             <a class="forum-logo text-white">AlwaysForum</a>
         </div>
-    </div>
+        <div class="align-self-center p-3">
+            <a class="nav-item text-white" asp-controller="Account" asp-action="Login">Login</a>
+        </div>
+        <div class="align-self-center p-3">
+            <a class="nav-item text-white" asp-controller="Account" asp-action="Register">Register</a>
+        </div>
+    </div>   
 
     <nav class="navbar navbar-expand-sm navbar-light bg-white box-shadow mb-3">
         <div class="container-fluid">

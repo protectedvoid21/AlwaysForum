@@ -1,7 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Data.Models;
+using Microsoft.AspNetCore.Identity;
+using Services.Sections;
 
-namespace Data.Models.Extensions; 
+namespace AlwaysForum.Extensions; 
 
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddIdentity(this IServiceCollection serviceCollection) {
@@ -11,5 +12,10 @@ public static class ServiceCollectionExtensions {
             options.User.RequireUniqueEmail = true;
         }).AddEntityFrameworkStores<ForumDbContext>();
         return serviceCollection;
+    }
+
+    public static IServiceCollection AddServices(this IServiceCollection serviceCollection) {
+        return serviceCollection
+            .AddTransient<ISectionsService, SectionsService>();
     }
 }

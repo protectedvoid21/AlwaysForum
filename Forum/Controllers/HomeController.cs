@@ -1,17 +1,20 @@
 ﻿using System.Diagnostics;
 using Data.Models;
+using Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Services.Sections;
 
 namespace AlwaysForum.Controllers {
     public class HomeController : Controller {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ISectionsService sectionsService;
 
-        public HomeController(ILogger<HomeController> logger) {
-            _logger = logger;
+        public HomeController(ISectionsService sectionsService) {
+            this.sectionsService = sectionsService;
         }
 
-        public IActionResult Index() {
-            return View();
+        public async Task<IActionResult> Index() {
+            var sectionList = await sectionsService.GetAll();
+            return View(sectionList);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
