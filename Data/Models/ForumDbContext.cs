@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace AlwaysForum.Models; 
+namespace Data.Models; 
 
 public class ForumDbContext : IdentityDbContext<ForumUser, IdentityRole, string> {
     public ForumDbContext(DbContextOptions<ForumDbContext> options) : base(options) { }

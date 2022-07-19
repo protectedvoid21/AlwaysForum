@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using AlwaysForum.Models;
+using Data.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AlwaysForum.Controllers {

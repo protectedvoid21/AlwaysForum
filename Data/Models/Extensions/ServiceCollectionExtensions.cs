@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace AlwaysForum.Models.Extensions; 
+namespace Data.Models.Extensions; 
 
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddIdentity(this IServiceCollection serviceCollection) {

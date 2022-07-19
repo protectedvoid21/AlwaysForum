@@ -1,4 +1,4 @@
-﻿namespace AlwaysForum.Models; 
+﻿namespace Data.Models; 
 
 public class Section {
     public int Id { get; set; }

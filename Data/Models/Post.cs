@@ -1,4 +1,4 @@
-﻿namespace AlwaysForum.Models; 
+﻿namespace Data.Models; 
 
 public class Post {
     public int Id { get; set; }

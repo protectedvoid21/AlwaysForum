@@ -1,6 +1,6 @@
-﻿using AlwaysForum.Models;
+﻿using Data.Models;
 
-namespace AlwaysForum.Services.Sections; 
+namespace Services.Sections; 
 
 public interface ISectionsService {
     Task AddAsync(string name);

@@ -1,5 +1,5 @@
-using AlwaysForum.Models;
-using AlwaysForum.Models.Extensions;
+using Data.Models;
+using Data.Models.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

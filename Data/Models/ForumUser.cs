@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace AlwaysForum.Models; 
+namespace Data.Models; 
 
 public class ForumUser : IdentityUser {
 }

@@ -1,6 +1,6 @@
-﻿using AlwaysForum.Models;
+﻿using Data.Models;
 
-namespace AlwaysForum.Services.Sections;
+namespace Services.Sections;
 
 public class SectionsService : ISectionsService {
     private readonly ForumDbContext dbContext;

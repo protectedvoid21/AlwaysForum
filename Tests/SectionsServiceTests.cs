@@ -1,9 +1,9 @@
-﻿using AlwaysForum.Models;
-using AlwaysForum.Services.Sections;
+﻿using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Services.Sections;
 using Xunit;
 
-namespace AlwaysForum.Tests; 
+namespace Tests; 
 
 public class SectionsServiceTests {
     private readonly SectionsService sectionsService;
