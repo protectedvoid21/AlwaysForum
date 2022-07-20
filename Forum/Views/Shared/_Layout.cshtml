@@ -13,12 +13,23 @@
         <div class="me-auto logo-container">
             <a class="forum-logo text-white">AlwaysForum</a>
         </div>
-        <div class="align-self-center p-3">
-            <a class="nav-item text-white" asp-controller="Account" asp-action="Login">Login</a>
-        </div>
-        <div class="align-self-center p-3">
-            <a class="nav-item text-white" asp-controller="Account" asp-action="Register">Register</a>
-        </div>
+        @if (User.Identity.IsAuthenticated) {
+            <div class="align-self-center p-3 text-white nav-item">
+                Logged as 
+                <a href="#" class="text-white">@User.Identity.Name</a>
+            </div>
+            <div class="align-self-center p-3 nav-item">
+                <a class="text-white" asp-controller="Account" asp-action="Logout">Sign off</a>
+            </div>
+        }
+        else {
+            <div class="align-self-center p-3">
+                <a class="nav-item text-white" asp-controller="Account" asp-action="Login">Login</a>
+            </div>
+            <div class="align-self-center p-3">
+                <a class="nav-item text-white" asp-controller="Account" asp-action="Register">Register</a>
+            </div>
+        }
     </div>   
 
     <nav class="navbar navbar-expand-sm navbar-light bg-white box-shadow mb-3">

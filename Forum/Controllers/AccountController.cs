@@ -22,12 +22,48 @@ public class AccountController : Controller {
     [HttpPost]
     public async Task<IActionResult> Login(LoginViewModel loginModel) {
         if (!ModelState.IsValid) {
-            return View(loginModel);
+            return View();
         }
 
         var user = await userManager.FindByNameAsync(loginModel.UserName);
-        await signInManager.PasswordSignInAsync(user, loginModel.Password, true, false);
+        var result = await signInManager.PasswordSignInAsync(user, loginModel.Password, true, false);
 
+        if (!result.Succeeded) {
+            ModelState.AddModelError("", "Invalid username or password");
+            return View();
+        }
+
+        return RedirectToAction("Index", "Home");
+    }
+
+    [HttpGet]
+    public ViewResult Register() => View();
+
+    [HttpPost]
+    public async Task<IActionResult> Register(RegisterViewModel registerModel) {
+        if (!ModelState.IsValid) {
+            return View();
+        }
+
+        ForumUser user = new() {
+            UserName = registerModel.UserName,
+            Email = registerModel.Email
+        };
+
+        var result = await userManager.CreateAsync(user, registerModel.Password);
+
+        if (!result.Succeeded) {
+            foreach (var error in result.Errors) {
+                ModelState.AddModelError("", error.Description);
+            }
+            return View();
+        }
+
+        return RedirectToAction("Index", "Home");
+    }
+
+    public async Task<IActionResult> LogOut() {
+        await signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
 }

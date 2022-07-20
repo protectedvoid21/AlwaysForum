@@ -1,7 +1,7 @@
-﻿using Data.Models;
+﻿using Data;
 using Data.Seeding;
 
-namespace AlwaysForum.Extensions; 
+namespace AlwaysForum.Extensions;
 
 public static class ApplicationBuilderExtensions {
     public static IApplicationBuilder SeedDatabase(this IApplicationBuilder app) {

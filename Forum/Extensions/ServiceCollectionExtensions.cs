@@ -1,8 +1,9 @@
-﻿using Data.Models;
+﻿using Data;
+using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Services.Sections;
 
-namespace AlwaysForum.Extensions; 
+namespace AlwaysForum.Extensions;
 
 public static class ServiceCollectionExtensions {
     public static IServiceCollection AddIdentity(this IServiceCollection serviceCollection) {

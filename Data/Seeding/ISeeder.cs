@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Data.Models;
 
-namespace Data.Seeding; 
+namespace Data.Seeding;
 
-public interface ISeeder {
+internal interface ISeeder {
     Task SeedAsync(ForumDbContext dbContext, IServiceProvider serviceProvider);
 }

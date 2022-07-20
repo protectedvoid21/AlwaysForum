@@ -6,12 +6,12 @@
     <div class="mb-3">
         <span asp-validation-for="UserName"></span>
         <label asp-for="UserName"></label><br/>
-        <input asp-for="UserName"/>
+        <input asp-for="UserName" class="form-control"/>
     </div>
     <div class="mb-3">
         <span asp-validation-for="Password"></span>
         <label asp-for="Password"></label><br/>
-        <input asp-for="Password" class="input-group-sm"/>
+        <input asp-for="Password" class="form-control"/>
     </div>
     <input class="btn btn-info" type="submit" value="Login"/>
 </form>

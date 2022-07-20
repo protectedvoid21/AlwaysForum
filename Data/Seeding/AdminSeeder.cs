@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Data.Seeding; 
+namespace Data.Seeding;
 
-public class AdminSeeder : ISeeder {
+internal class AdminSeeder : ISeeder {
     public async Task SeedAsync(ForumDbContext dbContext, IServiceProvider serviceProvider) {
         var userManager = serviceProvider.GetRequiredService<UserManager<ForumUser>>();
 

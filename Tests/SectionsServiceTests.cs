@@ -1,9 +1,10 @@
-﻿using Data.Models;
+﻿using Data;
+using Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Services.Sections;
 using Xunit;
 
-namespace Tests; 
+namespace Tests;
 
 public class SectionsServiceTests {
     private readonly SectionsService sectionsService;
