@@ -1,8 +1,26 @@
-﻿@{
+﻿@model IEnumerable<Section>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>AlwaysForum is open for any discussion!</p>
+    <p>To begin creating and commenting threads create an account</p>
+    <hr/>
+</div>
+<div>
+    <ul class="w-100">
+        @foreach (var sectionForum in Model) {
+            <li class="card m-1 w-100">
+                <h5 class="card-header">
+                    <a asp-controller="Section" asp-action="ViewSection" asp-route-sectionId="@sectionForum.Id">@sectionForum.Name</a>
+                </h5>
+                <div class="card-body">
+                    @sectionForum.Description
+                </div>
+            </li>
+        }
+    </ul>
 </div>

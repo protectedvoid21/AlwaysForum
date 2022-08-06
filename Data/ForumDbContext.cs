@@ -10,4 +10,5 @@ public class ForumDbContext : IdentityDbContext<ForumUser, IdentityRole, string>
 
     public DbSet<Section> Sections { get; set; }
     public DbSet<Post> Posts { get; set; }
+    public DbSet<Comment> Comments { get; set; }
 }

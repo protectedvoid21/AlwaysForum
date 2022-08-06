@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using Data
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -13,23 +14,30 @@
         <div class="me-auto logo-container">
             <a class="forum-logo text-white">AlwaysForum</a>
         </div>
-        @if (User.Identity.IsAuthenticated) {
-            <div class="align-self-center p-3 text-white nav-item">
-                Logged as 
-                <a href="#" class="text-white">@User.Identity.Name</a>
-            </div>
-            <div class="align-self-center p-3 nav-item">
-                <a class="text-white" asp-controller="Account" asp-action="Logout">Sign off</a>
-            </div>
-        }
-        else {
-            <div class="align-self-center p-3">
-                <a class="nav-item text-white" asp-controller="Account" asp-action="Login">Login</a>
-            </div>
-            <div class="align-self-center p-3">
-                <a class="nav-item text-white" asp-controller="Account" asp-action="Register">Register</a>
-            </div>
-        }
+        <div class="d-flex bg-opacity-10 bg-black">
+            @if (User.Identity.IsAuthenticated) {
+                <div class="align-self-center p-3 text-white nav-item">
+                    Logged as
+                    @if (User.IsInRole(GlobalConstants.AdminRoleName)) {
+                        <a href="#" class="text-uppercase text-white">@User.Identity.Name</a>
+                    }
+                    else {
+                        <a href="#" class="text-white">@User.Identity.Name</a>
+                    }
+                </div>
+                <div class="align-self-center p-3 nav-item">
+                    <a class="text-white" asp-controller="Account" asp-action="Logout">Sign off</a>
+                </div>
+            }
+            else {
+                <div class="align-self-center p-3">
+                    <a class="nav-item text-white" asp-controller="Account" asp-action="Login">Login</a>
+                </div>
+                <div class="align-self-center p-3">
+                    <a class="nav-item text-white" asp-controller="Account" asp-action="Register">Register</a>
+                </div>
+            }
+        </div>
     </div>   
 
     <nav class="navbar navbar-expand-sm navbar-light bg-white box-shadow mb-3">
@@ -48,6 +56,11 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" href="#">Shoutbox</a>
                     </li>
+                    @if (User.IsInRole(GlobalConstants.AdminRoleName)) {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Admin" asp-action="Panel">Admin panel</a>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Help</a>
                     </li>
@@ -56,7 +69,7 @@
         </div>
     </nav>
 </header>
-    <div class="container d-flex justify-content-center min-vh-100">
+    <div class="container min-vh-100">
         <main role="main" class="pb-3 ">
             @RenderBody()
         </main>

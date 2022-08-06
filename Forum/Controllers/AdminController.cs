@@ -13,6 +13,8 @@ public class AdminController : Controller {
         this.sectionsService = sectionsService;
     }
 
+    public ViewResult Panel() => View();
+
     [HttpGet]
     public IActionResult AddSection() => View();
 
@@ -22,8 +24,8 @@ public class AdminController : Controller {
             return View(sectionModel);
         }
 
-        await sectionsService.AddAsync(sectionModel.Name);
+        await sectionsService.AddAsync(sectionModel.Name, sectionModel.Description);
 
-        return Ok();
-    } 
+        return RedirectToAction("Panel");
+    }
 }

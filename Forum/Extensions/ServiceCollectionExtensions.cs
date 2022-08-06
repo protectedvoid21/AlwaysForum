@@ -1,6 +1,7 @@
 ﻿using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
+using Services.Posts;
 using Services.Sections;
 
 namespace AlwaysForum.Extensions;
@@ -17,6 +18,7 @@ public static class ServiceCollectionExtensions {
 
     public static IServiceCollection AddServices(this IServiceCollection serviceCollection) {
         return serviceCollection
-            .AddTransient<ISectionsService, SectionsService>();
+            .AddTransient<ISectionsService, SectionsService>()
+            .AddTransient<IPostsService, PostsService>();
     }
 }

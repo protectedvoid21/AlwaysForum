@@ -1,7 +1,8 @@
 ﻿@model Data.ViewModels.Account.RegisterViewModel
 
-<h2>Register</h2>
+<div class="d-flex justify-content-center">
 <form method="post">
+    <h2>Register</h2>
     <div asp-validation-summary="All"></div>
     <div class="mb-3">
         <span asp-validation-for="UserName"></span>
@@ -25,3 +26,4 @@
     </div>
     <input class="btn btn-info" type="submit" value="Register"/>
 </form>
+</div>

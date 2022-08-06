@@ -1,0 +1,13 @@
+﻿@model Data.ViewModels.SectionViewModel
+
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+<a class="btn btn-success" href="#">Add post</a>
+<hr/>
+
+@foreach (var post in Model.Posts) {
+    <div class="card">
+        <div class="card-header">@post.Title</div>
+        <div class="card-body">@post.Description</div>
+    </div>
+}
