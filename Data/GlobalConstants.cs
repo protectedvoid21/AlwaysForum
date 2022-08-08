@@ -13,4 +13,6 @@ public static class GlobalConstants {
     public const string AdminEmail = "admin@AlwaysForum.com";
 
     public static readonly string[] RequiredRoles = { "Moderator", "User" };
+
+    public const int MaximumPostDescriptionLength = 50;
 }

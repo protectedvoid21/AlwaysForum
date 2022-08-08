@@ -1,5 +1,9 @@
-﻿namespace AlwaysForum.Extensions; 
+﻿using System.Security.Claims;
 
-public class ClaimsPrincipalExtensions {
-    
+namespace AlwaysForum.Extensions; 
+
+public static class ClaimsPrincipalExtensions {
+    public static string GetById(this ClaimsPrincipal claimsPrincipal) {
+        return claimsPrincipal.FindFirstValue(ClaimTypes.NameIdentifier);
+    }
 }

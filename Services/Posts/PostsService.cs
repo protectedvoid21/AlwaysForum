@@ -12,15 +12,19 @@ public class PostsService : IPostsService {
     }
 
     public async Task<Post> GetById(int id) {
-        Post post = await dbContext.Posts.FirstAsync(p => p.Id == id);
+        Post post = await dbContext.Posts
+            .Include(p => p.Author)
+            .FirstAsync(p => p.Id == id);
         return post;
     }
 
     public async Task<IEnumerable<Post>> GetBySection(int sectionId) {
-        return dbContext.Posts.Where(p => p.SectionId == sectionId);
+        return dbContext.Posts
+            .Include(p => p.Author)
+            .Where(p => p.SectionId == sectionId);
     }
 
-    public async Task AddAsync(string title, string description, string authorId, int sectionId) {
+    public async Task<int> AddAsync(string title, string description, string authorId, int sectionId) {
         Post post = new() {
             Title = title,
             Description = description,
@@ -30,6 +34,8 @@ public class PostsService : IPostsService {
         };
         await dbContext.AddAsync(post);
         await dbContext.SaveChangesAsync();
+
+        return post.Id;
     }
 
     public async Task UpdateAsync(int id, string title, string description) {

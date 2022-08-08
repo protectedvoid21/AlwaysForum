@@ -1,0 +1,10 @@
+﻿@model Data.ViewModels.CommentCreateViewModel
+
+<h3>Share your opinion in a comment</h3>
+<form asp-controller="Comment" asp-action="Create" method="post">
+    <div asp-validation-summary="All"></div>
+    <input asp-for="PostId" hidden/>
+    <textarea asp-for="Description"></textarea>
+    
+    <input type="submit" value="Submit" class="btn btn-success"/>
+</form>

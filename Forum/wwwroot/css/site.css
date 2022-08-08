@@ -1,5 +1,8 @@
-html {
-  font-size: 14px;
+html { font-size: 14px; }
+
+* {
+    /*font-family: 'Merriweather', serif;*/
+    font-family: 'IBM Plex Sans', sans-serif;
 }
 
 @media (min-width: 768px) {
@@ -15,6 +18,7 @@ html {
 
 .container {
     background-color: white;
+    width: 75%;
     margin-top: 30px;
     padding: 20px;
 }

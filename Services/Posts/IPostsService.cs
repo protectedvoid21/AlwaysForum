@@ -7,7 +7,7 @@ public interface IPostsService {
 
     Task<IEnumerable<Post>> GetBySection(int sectionId);
 
-    Task AddAsync(string title, string description, string authorId, int sectionId);
+    Task<int> AddAsync(string title, string description, string authorId, int sectionId);
 
     Task UpdateAsync(int id, string title, string description);
 
