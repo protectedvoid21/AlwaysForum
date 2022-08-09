@@ -19,7 +19,7 @@ public class PostsServiceTests {
 
     [Fact]
     public async Task Get_PostById_ReturnsOnePostWithCertainId() {
-        await postsService.AddAsync("Title", "Desciption", "authorId", 1);
+        await postsService.AddAsync("Title", "Description", "authorId", 1);
 
         int postId = (await dbContext.Posts.FirstAsync()).Id;
         Post post = await postsService.GetById(postId);
