@@ -1,11 +1,13 @@
 ﻿using AlwaysForum.Extensions;
 using Data;
 using Data.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Comments;
 
-namespace AlwaysForum.Controllers; 
+namespace AlwaysForum.Controllers;
 
+[Authorize]
 public class CommentController : Controller {
     private readonly ICommentsService commentsService;
 

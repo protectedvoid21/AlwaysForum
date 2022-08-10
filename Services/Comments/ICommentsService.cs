@@ -7,6 +7,8 @@ public interface ICommentsService {
 
     Task<IEnumerable<Comment>> GetByPost(int postId);
 
+    Task<int> GetCountInPost(int postId);
+
     Task UpdateAsync(int id, string description);
 
     Task DeleteAsync(int id);

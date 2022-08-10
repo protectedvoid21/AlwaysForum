@@ -9,5 +9,5 @@ public class SectionViewModel {
 
     public string Description { get; set; }
 
-    public IEnumerable<Post> Posts { get; set; }
+    public IEnumerable<SectionPostViewModel> PostsModels { get; set; }
 }

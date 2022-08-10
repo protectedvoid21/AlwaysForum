@@ -43,18 +43,18 @@
 
     <div class="post-container">
         <ul class="list-group">
-            @foreach (var post in Model.Posts) {
+            @foreach (var post in Model.PostsModels) {
                 <li class="list-group-item">
                     <div class="d-flex justify-content-between">
-                        <div class="author">@post.Author.UserName</div>
+                        <div class="author">@post.AuthorName</div>
                         <div>@post.CreatedDate</div>
                     </div>
                     <div class="ms-2 me-auto">
                         <a class="fw-bold title" asp-controller="Post" asp-action="View" asp-route-postId="@post.Id">@post.Title</a>
-                        @Html.Raw(post.Description)
+                        @Html.Raw(post.ShortenedDescription)
                     </div>
                     <div class="float-end">
-                        <span class="badge bg-primary rounded-pill">@post.Comments.Count</span> <em>Replies</em>
+                        <span class="badge bg-primary rounded-pill">@post.CommentCount</span> <em>Replies</em>
                     </div>
                 </li>
             }

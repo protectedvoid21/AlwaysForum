@@ -15,7 +15,7 @@
         @foreach (var sectionForum in Model) {
             <li class="card m-1 w-100">
                 <h5 class="card-header">
-                    <a asp-controller="Section" asp-action="ViewSection" asp-route-sectionId="@sectionForum.Id">@sectionForum.Name</a>
+                    <a asp-controller="Section" asp-action="View" asp-route-sectionId="@sectionForum.Id">@sectionForum.Name</a>
                 </h5>
                 <div class="card-body">
                     @sectionForum.Description

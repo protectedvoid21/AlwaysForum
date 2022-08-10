@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Comments;
 
@@ -23,6 +24,10 @@ public class CommentsService : ICommentsService {
 
     public async Task<IEnumerable<Comment>> GetByPost(int postId) {
         return dbContext.Comments.Where(c => c.PostId == postId);
+    }
+
+    public async Task<int> GetCountInPost(int postId) {
+        return await dbContext.Comments.CountAsync(p => p.PostId == postId);
     }
 
     public async Task UpdateAsync(int id, string description) {

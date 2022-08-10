@@ -2,19 +2,23 @@
 using Data.Models;
 using Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Services.Comments;
 using Services.Posts;
 
 namespace AlwaysForum.Controllers;
 
 public class PostController : Controller {
     private readonly IPostsService postsService;
+    private readonly ICommentsService commentsService;
 
-    public PostController(IPostsService postsService) {
+    public PostController(IPostsService postsService, ICommentsService commentsService) {
         this.postsService = postsService;
+        this.commentsService = commentsService;
     }
 
     public async Task<IActionResult> View(int postId) {
         Post post = await postsService.GetById(postId);
+        post.Comments = (await commentsService.GetByPost(postId)).ToList();
         return View(post);
     }
 

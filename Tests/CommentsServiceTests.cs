@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Models;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Services.Comments;
 using Xunit;
@@ -33,6 +34,39 @@ public class CommentsServiceTests {
         IEnumerable<Comment> comments = await commentsService.GetByPost(1);
 
         Assert.Equal(2, comments.Count());
+    }
+
+    [Theory]
+    [InlineData(2)]
+    [InlineData(5)]
+    [InlineData(7)]
+    public async Task Get_CommentCount_ReturnsCommentCountForPost(int commentCount) {
+        Random random = new();
+        int randomCommentCount = random.Next(2, 5);
+
+        Comment[] comments = new Comment[commentCount + randomCommentCount];
+        for (int i = 0; i < commentCount; i++) {
+            comments[i] = new() {
+                Description = $"Desc{i}",
+                AuthorId = $"authorId{i}",
+                PostId = 1,
+            };
+        }
+
+        //other post id to make sure it doesn't count every comment
+        for (int i = 0; i < randomCommentCount; i++) {
+            comments[i + commentCount] = new() {
+                Description = $"Desc{i}",
+                AuthorId = $"authorId{i}",
+                PostId = 2,
+            };
+        }
+
+        await dbContext.AddRangeAsync(comments);
+        await dbContext.SaveChangesAsync();
+
+        int commentCountFromService = await commentsService.GetCountInPost(1);
+        Assert.Equal(commentCount, commentCountFromService);
     }
 
     [Fact]
