@@ -1,4 +1,4 @@
-﻿using Data.ViewModels;
+﻿using Data.ViewModels.Section;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Sections;

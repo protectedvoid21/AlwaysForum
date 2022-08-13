@@ -1,6 +1,6 @@
 ﻿using Data.Models;
 
-namespace Data.ViewModels; 
+namespace Data.ViewModels.Section;
 
 public class SectionViewModel {
     public int Id { get; set; }

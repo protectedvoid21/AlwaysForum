@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Data.ViewModels; 
+namespace Data.ViewModels.Section;
 
 public class SectionAddViewModel {
     [Required]

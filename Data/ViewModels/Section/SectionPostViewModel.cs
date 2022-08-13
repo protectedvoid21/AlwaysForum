@@ -1,6 +1,6 @@
 ﻿using Data.Models;
 
-namespace Data.ViewModels; 
+namespace Data.ViewModels.Section;
 
 public class SectionPostViewModel {
     public int Id { get; set; }
@@ -8,7 +8,7 @@ public class SectionPostViewModel {
     public string Title { get; set; }
 
     public string ShortenedDescription { get; set; }
-    
+
     public string AuthorName { get; set; }
 
     public string AuthorId { get; set; }

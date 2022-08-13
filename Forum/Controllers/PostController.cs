@@ -1,6 +1,7 @@
 ﻿using AlwaysForum.Extensions;
 using Data.Models;
 using Data.ViewModels;
+using Data.ViewModels.Post;
 using Microsoft.AspNetCore.Mvc;
 using Services.Comments;
 using Services.Posts;
@@ -19,6 +20,10 @@ public class PostController : Controller {
     public async Task<IActionResult> View(int postId) {
         Post post = await postsService.GetById(postId);
         post.Comments = (await commentsService.GetByPost(postId)).ToList();
+
+        if (User.Identity.IsAuthenticated) {
+            ViewBag.IsAuthor = await postsService.IsAuthor(postId, User.GetId());
+        }
         return View(post);
     }
 
@@ -40,7 +45,56 @@ public class PostController : Controller {
             return View(postModel);
         }
 
-        int createdId = await postsService.AddAsync(postModel.Title, postModel.Description, User.GetById(), postModel.SectionId);
+        int createdId = await postsService.AddAsync(postModel.Title, postModel.Description, User.GetId(), postModel.SectionId);
         return RedirectToAction("View", "Post", new { postId = createdId });
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(int postId) {
+        Post post = await postsService.GetById(postId);
+
+        if (post == null) {
+            return BadRequest();
+        }
+
+        if (!await postsService.IsAuthor(postId, User.GetId())) {
+            return Forbid();
+        }
+
+        PostEditViewModel postModel = new() {
+            Id = postId,
+            Title = post.Title,
+            Description = post.Description,
+        };
+
+        return View(postModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(PostEditViewModel postModel) {
+        if (!ModelState.IsValid) {
+            return View(postModel);
+        }
+
+        if(!await postsService.IsAuthor(postModel.Id, User.GetId())) {
+            return Forbid();
+        }
+
+        await postsService.UpdateAsync(postModel.Id, postModel.Title, postModel.Description);
+        return RedirectToAction("View", "Post", new { postId = postModel.Id });
+    }
+
+    public async Task<IActionResult> Delete(int postId) {
+        if(!await postsService.IsAuthor(postId, User.GetId())) {
+            return Forbid();
+        }
+
+        await postsService.DeleteAsync(postId);
+        MessageViewModel messageModel = new() {
+            Title = "Success",
+            Description = "Post has been successfully deleted",
+            MessageType = MessageType.Success,
+        };
+        return RedirectToAction("Message", "Home", messageModel);
     }
 }

@@ -1,0 +1,16 @@
+﻿@using Data.ViewModels
+@model Data.ViewModels.MessageViewModel
+
+@{
+    string className = Model.MessageType switch {
+        MessageType.Success => "success",
+        MessageType.Warning => "warning",
+        MessageType.Error => "danger",
+        _ => string.Empty 
+        };
+}
+
+<div class="text-center">
+    <h1 class="fw-bold text-@className">@Model.Title</h1>
+    <p>@Model.Description</p>
+</div>

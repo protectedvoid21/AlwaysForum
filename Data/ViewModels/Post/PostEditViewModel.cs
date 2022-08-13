@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Data.ViewModels; 
+namespace Data.ViewModels.Post;
 
-public class PostCreateViewModel {
+public class PostEditViewModel {
+    [Required]
+    public int Id { get; set; }
     [Required]
     public string Title { get; set; }
     [Required]
     public string Description { get; set; }
-    [Required]
-    public int SectionId { get; set; }
 }

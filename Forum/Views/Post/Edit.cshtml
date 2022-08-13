@@ -1,0 +1,17 @@
+﻿@model Data.ViewModels.Post.PostEditViewModel
+
+<form asp-controller="Post" asp-action="Edit" method="post">
+    <div asp-validation-summary="All"></div>
+    <input asp-for="Id" hidden/>
+    <div class="mb-3">
+        <span asp-validation-for="Title"></span>
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <span asp-validation-for="Description"></span>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description"></textarea>
+    </div>
+    <input type="submit" value="Submit" class="btn btn-success m-3"/>
+</form>

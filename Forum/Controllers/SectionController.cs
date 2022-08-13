@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using Data;
 using Data.Models;
-using Data.ViewModels;
+using Data.ViewModels.Section;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Services.Comments;
 using Services.Posts;
 using Services.Sections;
 
-namespace AlwaysForum.Controllers; 
+namespace AlwaysForum.Controllers;
 
 public class SectionController : Controller {
     private readonly ISectionsService sectionsService;
@@ -42,7 +42,7 @@ public class SectionController : Controller {
                 AuthorId = post.AuthorId,
                 AuthorName = post.Author.UserName,
                 Title = post.Title,
-                CommentCount = (await commentsService.GetByPost(post.Id)).Count(),
+                CommentCount = await commentsService.GetCountInPost(post.Id),
                 CreatedDate = post.CreatedDate
             });
         }

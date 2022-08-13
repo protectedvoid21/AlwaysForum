@@ -51,6 +51,18 @@ public class PostsServiceTests {
         Assert.Single(dbContext.Posts);
     }
 
+    [Theory]
+    [InlineData("1", "1", true)]
+    [InlineData("1", "2", false)]
+    [InlineData("111", "112", false)]
+    public async Task Check_PostAndAuthor_ReturnInformationIfIsAuthorOfPost(string authorId, string otherAuthorId, bool expected) {
+        await postsService.AddAsync("Title", "Desc", authorId, 1);
+
+        bool isAuthor = await postsService.IsAuthor(1, otherAuthorId);
+
+        Assert.Equal(isAuthor, expected);
+    }
+
     [Fact]
     public async Task Update_AddedPost_PostShouldHaveChangedData() {
         Post post = new() {

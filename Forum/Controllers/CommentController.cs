@@ -17,7 +17,7 @@ public class CommentController : Controller {
 
     [HttpPost]
     public async Task<IActionResult> Create(CommentCreateViewModel commentModel) {
-        await commentsService.AddAsync(commentModel.Description, commentModel.PostId, User.GetById());
+        await commentsService.AddAsync(commentModel.Description, commentModel.PostId, User.GetId());
 
         return RedirectToAction("View", "Post", new { postId = commentModel.PostId });
     }

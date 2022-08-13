@@ -38,6 +38,14 @@ public class PostsService : IPostsService {
         return post.Id;
     }
 
+    public async Task<bool> IsAuthor(int postId, string authorId) {
+        Post post = await dbContext.Posts.FindAsync(postId);
+        if (post == null) {
+            return false;
+        }
+        return post.AuthorId == authorId;
+    }
+
     public async Task UpdateAsync(int id, string title, string description) {
         Post post = await dbContext.Posts.FindAsync(id);
         post.Title = title;
