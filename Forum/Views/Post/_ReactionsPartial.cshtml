@@ -1,0 +1,42 @@
+﻿<div>
+    <div>
+        <button id="like-button" class="btn btn-success" onclick="react(like)">Like</button>
+        <p>0</p>
+    </div>
+    <div>
+        <button id="love-button" class="btn btn-success" onclick="react(love)">Love</button>
+        <p>0</p>
+    </div>
+    <div>
+        <button id="wow-button" class="btn btn-success" onclick="react(wow)">Wow</button>
+        <p>0</p>
+    </div>
+    <div>
+        <button id="sad-button" class="btn btn-success" onclick="react(sad)">Sad</button>
+        <p>0</p>
+    </div>
+    <div>
+        <button id="angry-button" class="btn btn-success" onclick="react(angry)">Angry</button>
+        <p>0</p>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        const likeButton = document.getElementById('like-button')
+        const loveButton = document.getElementById('love-button')
+        const wowButton = document.getElementById('wow-button')
+        const sadButton = document.getElementById('sad-button')
+        const angryButton = document.getElementById('angry-button')
+
+        function react(reactionType) {
+            let fetchString = ''
+
+            switch(reactionType) {
+                case 'like':
+                    
+                    break
+            }
+        }
+    </script>
+}

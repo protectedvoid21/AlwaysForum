@@ -1,36 +1,57 @@
-﻿using Data.Models;
+﻿using AlwaysForum.Extensions;
+using Data.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Services.Reactions;
 
 namespace AlwaysForum.Controllers {
-    [Route("api/[controller]")]
-    [ApiController, Authorize]
+    [Route("api/reaction")]
+    [ApiController]
     public class ReactionController : ControllerBase {
-        // GET: api/<ReactionController>
-        [HttpGet]
-        public async Task<Reaction> Get() {
-            return new string[] { "value1", "value2" };
+        private readonly IReactionsService reactionsService;
+
+        public ReactionController(IReactionsService reactionsService) {
+            this.reactionsService = reactionsService;
         }
 
-        // GET api/<ReactionController>/5
-        [HttpGet("{id}")]
-        public string Get(int id) {
-            return "value";
+        [HttpGet("{postId:int}")]
+        public async Task<IEnumerable<Reaction>> GetPostReactions(int postId) {
+            return await reactionsService.GetByPost(postId);
         }
 
-        // POST api/<ReactionController>
-        [HttpPost]
-        public void Post([FromBody] string value) {
+        [HttpPost("like/{postId:int}")]
+        public async Task Like(int postId) {
+            await reactionsService.ReactAsync(postId, User.GetId(), ReactionType.Like);
         }
 
-        // PUT api/<ReactionController>/5
-        [HttpPut("{id}")]
+        [HttpPost("love/{postId:int}")]
+        public async Task Love(int postId) {
+            await reactionsService.ReactAsync(postId, User.GetId(), ReactionType.Love);
+        }
+
+        [HttpPost("wow/{postId:int}")]
+        public async Task Wow(int postId) {
+            await reactionsService.ReactAsync(postId, User.GetId(), ReactionType.Like);
+        }
+
+        [HttpPost("sad/{postId:int}")]
+        public async Task Sad(int postId) {
+            await reactionsService.ReactAsync(postId, User.GetId(), ReactionType.Sad);
+        }
+
+        [HttpPost("angry/{postId:int}")]
+        public async Task Angry(int postId) {
+            await reactionsService.ReactAsync(postId, User.GetId(), ReactionType.Angry);
+        }
+
+        /*[HttpPut("{id}")]
         public void Put(int id, [FromBody] string value) {
+
         }
 
-        // DELETE api/<ReactionController>/5
         [HttpDelete("{id}")]
         public void Delete(int id) {
-        }
+
+        }*/
     }
 }

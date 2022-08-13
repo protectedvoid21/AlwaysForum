@@ -3,6 +3,7 @@ using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Services.Comments;
 using Services.Posts;
+using Services.Reactions;
 using Services.Sections;
 
 namespace AlwaysForum.Extensions;
@@ -21,6 +22,7 @@ public static class ServiceCollectionExtensions {
         return serviceCollection
             .AddTransient<ISectionsService, SectionsService>()
             .AddTransient<IPostsService, PostsService>()
+            .AddTransient<IReactionsService, ReactionsService>()
             .AddTransient<ICommentsService, CommentsService>();
     }
 }

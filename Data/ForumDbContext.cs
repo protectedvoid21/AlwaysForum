@@ -14,5 +14,5 @@ public class ForumDbContext : IdentityDbContext<ForumUser, IdentityRole, string>
 
     public DbSet<Comment> Comments { get; set; }
 
-    public DbSet<Tag> Tags { get; set; }
+    public DbSet<Reaction> Reactions { get; set; }
 }

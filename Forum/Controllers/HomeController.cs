@@ -4,26 +4,26 @@ using Data.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services.Sections;
 
-namespace AlwaysForum.Controllers {
-    public class HomeController : Controller {
-        private readonly ISectionsService sectionsService;
+namespace AlwaysForum.Controllers; 
 
-        public HomeController(ISectionsService sectionsService) {
-            this.sectionsService = sectionsService;
-        }
+public class HomeController : Controller {
+    private readonly ISectionsService sectionsService;
 
-        public async Task<IActionResult> Index() {
-            var sectionList = await sectionsService.GetAll();
-            return View(sectionList);
-        }
+    public HomeController(ISectionsService sectionsService) {
+        this.sectionsService = sectionsService;
+    }
 
-        public ViewResult Message(MessageViewModel messageModel) {
-            return View(messageModel);
-        }
+    public async Task<IActionResult> Index() {
+        var sectionList = await sectionsService.GetAll();
+        return View(sectionList);
+    }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error() {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
+    public ViewResult Message(MessageViewModel messageModel) {
+        return View(messageModel);
+    }
+
+    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+    public IActionResult Error() {
+        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

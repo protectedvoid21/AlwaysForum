@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Comments\" />
+    <Folder Include="Reactions\" />
   </ItemGroup>
 
 </Project>
