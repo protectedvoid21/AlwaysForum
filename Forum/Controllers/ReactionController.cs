@@ -7,6 +7,7 @@ using Services.Reactions;
 namespace AlwaysForum.Controllers {
     [Route("api/reaction")]
     [ApiController]
+    //[Authorize]
     public class ReactionController : ControllerBase {
         private readonly IReactionsService reactionsService;
 
@@ -31,7 +32,7 @@ namespace AlwaysForum.Controllers {
 
         [HttpPost("wow/{postId:int}")]
         public async Task Wow(int postId) {
-            await reactionsService.ReactAsync(postId, User.GetId(), ReactionType.Like);
+            await reactionsService.ReactAsync(postId, User.GetId(), ReactionType.Wow);
         }
 
         [HttpPost("sad/{postId:int}")]

@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Reactions; 
 
@@ -11,6 +12,12 @@ public class ReactionsService : IReactionsService {
     }
 
     public async Task ReactAsync(int postId, string userId, ReactionType reactionType) {
+        Reaction? existingReaction = await dbContext.Reactions.FirstOrDefaultAsync(r => r.UserId == userId && r.PostId == postId);
+        if (existingReaction != null) {
+            await UpdateAsync(existingReaction.Id, reactionType);
+            return;
+        }
+
         Reaction reaction = new() {
             PostId = postId,
             UserId = userId,

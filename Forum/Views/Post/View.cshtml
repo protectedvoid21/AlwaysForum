@@ -46,6 +46,7 @@
 <hr/>
 
 <div class="description-container">@Html.Raw(Model.Description)</div>
+<partial name="_ReactionsPartial" model="@Model.Id"/>
 <hr/>
 <div class="create-comment">
     @await Component.InvokeAsync("CreateComment", Model.Id)

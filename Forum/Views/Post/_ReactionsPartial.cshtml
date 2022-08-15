@@ -1,42 +1,56 @@
-﻿<div>
+﻿@model int
+
+<div class="d-flex justify-content-around">
     <div>
-        <button id="like-button" class="btn btn-success" onclick="react(like)">Like</button>
-        <p>0</p>
+        <button id="like-button" class="btn btn-success" onclick="react('like')">Like</button>
+        <p class="reaction-count">0</p>
     </div>
     <div>
-        <button id="love-button" class="btn btn-success" onclick="react(love)">Love</button>
-        <p>0</p>
+        <button id="love-button" class="btn btn-success" onclick="react('love')">Love</button>
+        <p class="reaction-count">0</p>
     </div>
     <div>
-        <button id="wow-button" class="btn btn-success" onclick="react(wow)">Wow</button>
-        <p>0</p>
+        <button id="wow-button" class="btn btn-success" onclick="react('wow')">Wow</button>
+        <p class="reaction-count">0</p>
     </div>
     <div>
-        <button id="sad-button" class="btn btn-success" onclick="react(sad)">Sad</button>
-        <p>0</p>
+        <button id="sad-button" class="btn btn-success" onclick="react('sad')">Sad</button>
+        <p class="reaction-count">0</p>
     </div>
     <div>
-        <button id="angry-button" class="btn btn-success" onclick="react(angry)">Angry</button>
-        <p>0</p>
+        <button id="angry-button" class="btn btn-success" onclick="react('angry')">Angry</button>
+        <p class="reaction-count">0</p>
     </div>
 </div>
 
-@section Scripts {
-    <script>
-        const likeButton = document.getElementById('like-button')
-        const loveButton = document.getElementById('love-button')
-        const wowButton = document.getElementById('wow-button')
-        const sadButton = document.getElementById('sad-button')
-        const angryButton = document.getElementById('angry-button')
+<script>
+    const reactionTexts = document.querySelectorAll('.reaction-count')
 
-        function react(reactionType) {
-            let fetchString = ''
+    async function getReactions() {
+        const response = await fetch('https://localhost:7150/api/reaction/' + @Model)
 
-            switch(reactionType) {
-                case 'like':
-                    
-                    break
-            }
+        const jsonResponse = await response.json()
+        console.log(jsonResponse)
+
+        for (let i = 0; i < 5; i++) {
+            reactionTexts[i].textContent = jsonResponse.filter(r => r.reactionType == i).length
         }
-    </script>
-}
+    }
+
+    window.onload = async () => {
+        await getReactions()
+    }
+
+    async function react(reactionType) {
+        const url = `https://localhost:7150/api/reaction/${reactionType}/${@Model}`
+
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+
+        await getReactions()
+    }
+</script>
