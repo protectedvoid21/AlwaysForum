@@ -58,7 +58,7 @@
         <li>
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
-                    <a>@comment.Author.UserName</a>
+                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@comment.AuthorId">@comment.Author.UserName</a>
                     <div>@comment.CreatedTime</div>
                 </div>
                 <div class="card-body">@Html.Raw(comment.Description)</div>

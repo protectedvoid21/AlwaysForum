@@ -23,7 +23,9 @@ public class CommentsService : ICommentsService {
     }
 
     public async Task<IEnumerable<Comment>> GetByPost(int postId) {
-        return dbContext.Comments.Where(c => c.PostId == postId);
+        return dbContext.Comments
+            .Include(c => c.Author)
+            .Where(c => c.PostId == postId);
     }
 
     public async Task<int> GetCountInPost(int postId) {
@@ -31,7 +33,7 @@ public class CommentsService : ICommentsService {
     }
 
     public async Task UpdateAsync(int id, string description) {
-        Comment comment = await dbContext.Comments.FindAsync(id);
+        Comment? comment = await dbContext.Comments.FindAsync(id);
         if (comment == null) {
             return;
         }
@@ -42,7 +44,7 @@ public class CommentsService : ICommentsService {
     }
 
     public async Task DeleteAsync(int id) {
-        Comment comment = await dbContext.Comments.FindAsync(id);
+        Comment? comment = await dbContext.Comments.FindAsync(id);
         if (comment == null) {
             return;
         }

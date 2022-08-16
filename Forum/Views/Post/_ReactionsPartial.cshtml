@@ -44,7 +44,7 @@
     async function react(reactionType) {
         const url = `https://localhost:7150/api/reaction/${reactionType}/${@Model}`
 
-        const response = await fetch(url, {
+        await fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

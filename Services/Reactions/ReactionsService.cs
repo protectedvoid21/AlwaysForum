@@ -14,6 +14,11 @@ public class ReactionsService : IReactionsService {
     public async Task ReactAsync(int postId, string userId, ReactionType reactionType) {
         Reaction? existingReaction = await dbContext.Reactions.FirstOrDefaultAsync(r => r.UserId == userId && r.PostId == postId);
         if (existingReaction != null) {
+            if (existingReaction.ReactionType == reactionType) {
+                await RemoveAsync(existingReaction.Id);
+                return;
+            }
+
             await UpdateAsync(existingReaction.Id, reactionType);
             return;
         }
