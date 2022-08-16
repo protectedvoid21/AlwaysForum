@@ -27,9 +27,12 @@ public class CommentsServiceTests {
 
     [Fact]
     public async Task Get_Comments_ReturnsAllCommentsFromOnePost() {
-        await commentsService.AddAsync("Desc1", 1, "authorId");
-        await commentsService.AddAsync("Desc2", 1, "authorId");
-        await commentsService.AddAsync("Desc3", 2, "authorId");
+        var user = new ForumUser();
+        await dbContext.AddAsync(user);
+
+        await commentsService.AddAsync("Desc1", 1, user.Id);
+        await commentsService.AddAsync("Desc2", 1, user.Id);
+        await commentsService.AddAsync("Desc3", 2, user.Id);
 
         IEnumerable<Comment> comments = await commentsService.GetByPost(1);
 

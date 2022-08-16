@@ -25,6 +25,35 @@ public class ReactionsServiceTests {
         Assert.Single(dbContext.Reactions);
     }
 
+    [Theory]
+    [InlineData(ReactionType.Like, ReactionType.Love)]
+    [InlineData(ReactionType.Love, ReactionType.Wow)]
+    [InlineData(ReactionType.Wow, ReactionType.Sad)]
+    [InlineData(ReactionType.Sad, ReactionType.Angry)]
+    public async Task Add_NewReactionOverridingExisting_ExistingReactionShouldBeUpdated(ReactionType existingReactionType, ReactionType expectedReactionType) {
+        await reactionsService.ReactAsync(1, "1", existingReactionType);
+        Assert.Single(dbContext.Reactions);
+
+        await reactionsService.ReactAsync(1, "1", expectedReactionType);
+        Reaction reaction = await dbContext.Reactions.FirstAsync();
+
+        Assert.Equal(expectedReactionType, reaction.ReactionType);
+    }
+
+    [Theory]
+    [InlineData(ReactionType.Like)]
+    [InlineData(ReactionType.Love)]
+    [InlineData(ReactionType.Wow)]
+    [InlineData(ReactionType.Sad)]
+    [InlineData(ReactionType.Angry)]
+    public async Task React_TryAddSameReactionWithSameReactionType_DeleteReaction(ReactionType reactionType) {
+        await reactionsService.ReactAsync(1, "1", reactionType);
+        Assert.Single(dbContext.Reactions);
+
+        await reactionsService.ReactAsync(1, "1", reactionType);
+        Assert.Empty(dbContext.Reactions);
+    }
+
     [Fact]
     public async Task Get_ByPost_ReturnsAllReactionInPost() {
         IEnumerable<Post> posts = new[] {
