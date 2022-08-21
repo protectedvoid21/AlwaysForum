@@ -48,7 +48,8 @@ public class AccountController : Controller {
 
         ForumUser user = new() {
             UserName = registerModel.UserName,
-            Email = registerModel.Email
+            Email = registerModel.Email,
+            CreatedDate = DateTime.Now,
         };
 
         var result = await userManager.CreateAsync(user, registerModel.Password);

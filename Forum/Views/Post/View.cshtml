@@ -39,7 +39,7 @@
 </div>
 
 <div class="d-flex justify-content-between">
-    <h4>Author : <a class="link-dark text-decoration-none fw-bold" href="#">@Model.Author.UserName</a></h4>
+    <h4>Author : <a class="link-dark text-decoration-none fw-bold" asp-controller="User" asp-action="Profile" asp-route-userId="@Model.AuthorId">@Model.Author.UserName</a></h4>
     <div>@Model.CreatedDate</div>
 </div>
 

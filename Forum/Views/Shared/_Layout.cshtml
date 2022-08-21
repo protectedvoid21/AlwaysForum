@@ -1,4 +1,5 @@
 ﻿@using Data
+@using AlwaysForum.Extensions
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,10 +25,10 @@
                 <div class="align-self-center p-3 text-white nav-item">
                     Logged as
                     @if (User.IsInRole(GlobalConstants.AdminRoleName)) {
-                        <a href="#" class="text-uppercase text-white">@User.Identity.Name</a>
+                        <a asp-controller="User" asp-action="Profile" asp-route-userId="@User.GetId()" class="text-uppercase text-white">@User.Identity.Name</a>
                     }
                     else {
-                        <a href="#" class="text-white">@User.Identity.Name</a>
+                        <a asp-controller="User" asp-action="Profile" asp-route-userId="@User.GetId()" class="text-white">@User.Identity.Name</a>
                     }
                 </div>
                 <div class="align-self-center p-3 nav-item">

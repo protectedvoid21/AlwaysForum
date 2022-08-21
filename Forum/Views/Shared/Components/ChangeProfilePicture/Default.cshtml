@@ -1,0 +1,35 @@
+﻿@model Data.ViewModels.ChangeProfilePictureViewModel
+
+<style>
+    .component-container {
+        padding: 20px;
+        width: 600px;
+    }
+
+    .avatar-block {
+        background-color: #cccccc;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>
+
+<div class="component-container text-center">
+    <h2>Change profile picture</h2>
+    <div>
+        <p>Current avatar</p>
+        @if (string.IsNullOrEmpty(Model.ProfilePicture)) {
+            <img width="200" height="200" src="/images/default-picture.svg" alt="Current profile picture"/>
+        }
+        else {
+            <img width="200" height="200" src="/images/userpictures/@Model.ProfilePicture" alt="Current profile picture"/>
+        }
+    </div>
+    <div>
+        <p>Upload new profile picture : </p>
+        <form enctype="multipart/form-data" asp-controller="User" asp-action="ChangeProfilePicture" method="post">
+            <input asp-for="UserId" hidden/>
+            <input asp-for="NewProfilePicture" type="file" accept="image/*"/>
+            <input type="submit" class="btn btn-info"/>
+        </form>
+    </div>
+</div>

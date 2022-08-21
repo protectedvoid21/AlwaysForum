@@ -1,10 +1,12 @@
-﻿using Data;
+﻿using AutoMapper;
+using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Services.Comments;
 using Services.Posts;
 using Services.Reactions;
 using Services.Sections;
+using Services.Users;
 
 namespace AlwaysForum.Extensions;
 
@@ -20,6 +22,8 @@ public static class ServiceCollectionExtensions {
 
     public static IServiceCollection AddServices(this IServiceCollection serviceCollection) {
         return serviceCollection
+            .AddAutoMapper(typeof(MapperProfile))
+            .AddTransient<IUsersService, UsersService>()
             .AddTransient<ISectionsService, SectionsService>()
             .AddTransient<IPostsService, PostsService>()
             .AddTransient<IReactionsService, ReactionsService>()
