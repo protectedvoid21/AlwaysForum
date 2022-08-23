@@ -1,0 +1,55 @@
+﻿@model int
+
+<style>
+    .vote-arrow {
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .vote-count {
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .vote-arrow .vote-count {
+        line-height: 0;
+    }
+</style>
+
+<div>
+    <div class="d-flex flex-column m-lg-2">
+        <div class="vote-arrow" onclick="addVote(true)">⬆</div>
+        <div class="vote-count">0</div>
+        <div class="vote-arrow" onclick="addVote(false)">⬇</div>
+    </div>
+</div>
+
+<script>
+    const voteCount = document.querySelector('.vote-count')
+
+    async function getVoteCount() {
+        const response = await fetch('https://localhost:7150/api/commentvote/' + @Model)
+        const jsonResponse = await response.json()
+
+        voteCount.textContent = jsonResponse
+    }
+
+    async function addVote(voteType) {
+        await fetch('https://localhost:7150/api/commentvote', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                commentId: @Model,
+                isUpVote: voteType,
+            }),
+        })
+
+        await getVoteCount()
+    }
+
+    window.onload = async () => {
+        await getVoteCount()
+    }
+</script>

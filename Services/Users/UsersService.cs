@@ -25,7 +25,7 @@ public class UsersService : IUsersService {
 
     public async Task ChangeProfilePicture(string userId, IFormFile profilePicture) {
         string filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/userpictures", userId);
-        filePath += "." + Path.GetExtension(profilePicture.FileName);
+        filePath += Path.GetExtension(profilePicture.FileName);
 
         await using FileStream fileStream = new(filePath, FileMode.Create);
         await profilePicture.CopyToAsync(fileStream);

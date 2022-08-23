@@ -12,4 +12,6 @@ public class Comment {
     public ForumUser Author { get; set; }
     
     public DateTime CreatedTime { get; set; }
+
+    public List<CommentUpVote> Votes { get; set; } = new();
 }

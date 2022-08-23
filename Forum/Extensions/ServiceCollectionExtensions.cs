@@ -3,6 +3,7 @@ using Data;
 using Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Services.Comments;
+using Services.CommentUpVotes;
 using Services.Posts;
 using Services.Reactions;
 using Services.Sections;
@@ -27,6 +28,7 @@ public static class ServiceCollectionExtensions {
             .AddTransient<ISectionsService, SectionsService>()
             .AddTransient<IPostsService, PostsService>()
             .AddTransient<IReactionsService, ReactionsService>()
-            .AddTransient<ICommentsService, CommentsService>();
+            .AddTransient<ICommentsService, CommentsService>()
+            .AddTransient<ICommentUpVotesService, CommentUpVotesService>();
     }
 }

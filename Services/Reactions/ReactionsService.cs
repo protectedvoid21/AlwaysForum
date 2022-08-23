@@ -33,6 +33,10 @@ public class ReactionsService : IReactionsService {
         await dbContext.SaveChangesAsync();
     }
 
+    public async Task UpVoteComment(int commentId, string userId, bool isUpVote) {
+        
+    }
+
     public async Task<IEnumerable<Reaction>> GetByPost(int postId) {
         return dbContext.Reactions.Where(r => r.PostId == postId);
     }

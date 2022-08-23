@@ -25,6 +25,29 @@
         list-style-type: none;
         padding: 0;
     }
+
+    .vote-arrow {
+        font-size: 2em;
+        cursor: pointer;
+    }
+
+    .vote-count {
+        font-size: 2em;
+        font-weight: bold;
+    }
+
+    .voted {
+        color: #ff3535;
+    }
+
+    .non-voted {
+        background-color: rgba(0, 0, 0, 0);
+        border: 2px solid #9b9b9b
+    }
+
+    .vote-arrow .vote-count {
+        line-height: 0;
+    }
 </style>
 
 
@@ -61,8 +84,55 @@
                     <a asp-controller="User" asp-action="Profile" asp-route-userId="@comment.AuthorId">@comment.Author.UserName</a>
                     <div>@comment.CreatedTime</div>
                 </div>
-                <div class="card-body">@Html.Raw(comment.Description)</div>
+                <div class="d-flex">
+                    <div>
+                        <div>
+                            <div class="d-flex flex-column m-lg-2">
+                                <div class="vote-arrow user-select-none" onclick="addVote(true, @comment.Id)">⬆</div>
+                                <div id="@comment.Id" class="vote-count user-select-none">0</div>
+                                <div class="vote-arrow user-select-none" onclick="addVote(false, @comment.Id)">⬇</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">@Html.Raw(comment.Description)</div>
+                </div>
             </div>
         </li>
     </ul>
+}
+
+@section Scripts {
+    <script>
+        const voteCounts = document.querySelectorAll('.vote-count')
+
+        async function getVoteCount(commentId) {
+            const response = await fetch('https://localhost:7150/api/commentvote/' + commentId)
+            const voteCount = await response.json()
+
+            return voteCount
+        }
+
+        async function addVote(voteType, commentId) {
+            await fetch('https://localhost:7150/api/commentvote', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    commentId: commentId,
+                    isUpVote: voteType,
+                }),
+            })
+
+            const commentVoteCount = document.getElementById(commentId)
+            commentVoteCount.textContent = await getVoteCount(commentId)
+        }
+
+        window.onload = async () => {
+            voteCounts.forEach(async (voteCount) => {
+                const commentId = voteCount.id
+                voteCount.textContent = await getVoteCount(commentId)
+            })
+        }
+    </script>
 }

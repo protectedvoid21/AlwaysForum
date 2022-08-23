@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 builder.Services.AddDbContext<ForumDbContext>(config =>
     config.UseSqlServer(builder.Configuration.GetConnectionString("ForumDatabase")));
 builder.Services.AddIdentity();

@@ -30,7 +30,6 @@
         const response = await fetch('https://localhost:7150/api/reaction/' + @Model)
 
         const jsonResponse = await response.json()
-        console.log(jsonResponse)
 
         for (let i = 0; i < 5; i++) {
             reactionTexts[i].textContent = jsonResponse.filter(r => r.reactionType == i).length
