@@ -1,0 +1,21 @@
+﻿@model Comment
+
+<div class="card d-flex flex-row">
+    <div class="card-header d-flex flex-column justify-content-between">
+        <partial name="_UserPicturePartial" model="@Model.Author.ProfilePicture"/>
+        <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model.AuthorId">@Model.Author.UserName</a>
+        <div>@Model.CreatedTime</div>
+    </div>
+    <div class="d-flex">
+        <div>
+            <div>
+                <div data-comment-id="@Model.Id" class="vote-container d-flex m-lg-2 gap-3">
+                    <div data-arrow-type="up" class="vote-arrow user-select-none" onclick="addVote(true, @Model.Id)">⬆</div>
+                    <div data-comment-id="@Model.Id" class="vote-count user-select-none">0</div>
+                    <div data-arrow-type="down" class="vote-arrow user-select-none" onclick="addVote(false, @Model.Id)">⬇</div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">@Html.Raw(Model.Description)</div>
+    </div>
+</div>

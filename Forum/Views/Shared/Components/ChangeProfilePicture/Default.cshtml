@@ -11,9 +11,18 @@
         padding: 10px;
         border-radius: 5px;
     }
+
+    .close {
+        right: 5px;
+        top: 5px;
+        width: 20px;
+        position: absolute;
+        cursor: pointer;
+    }
 </style>
 
 <div class="component-container text-center">
+    <img src="/images/close.svg" class="close"/>
     <h2>Change profile picture</h2>
     <div>
         <p>Current avatar</p>
@@ -29,7 +38,7 @@
         <form enctype="multipart/form-data" asp-controller="User" asp-action="ChangeProfilePicture" method="post">
             <input asp-for="UserId" hidden/>
             <input asp-for="NewProfilePicture" type="file" accept="image/*"/>
-            <input type="submit" class="btn btn-info"/>
+            <input type="submit" class="btn btn-info" value="Confirm"/>
         </form>
     </div>
 </div>

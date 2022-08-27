@@ -9,26 +9,26 @@ namespace AlwaysForum.Controllers;
 
 [ApiController, Route("api/commentvote")]
 public class CommentUpVoteController : ControllerBase {
-    private readonly ICommentUpVotesService commentUpVotesService;
+    private readonly ICommentVotesService commentVotesService;
 
-    public CommentUpVoteController(ICommentUpVotesService commentUpVotesService) {
-        this.commentUpVotesService = commentUpVotesService;
+    public CommentUpVoteController(ICommentVotesService commentVotesService) {
+        this.commentVotesService = commentVotesService;
     }
 
     [HttpGet("{commentId:int}")]
     public async Task<int> GetVoteCount(int commentId) {
-        return await commentUpVotesService.GetVoteCount(commentId);
+        return await commentVotesService.GetVoteCount(commentId);
     }
 
     [Authorize]
     [HttpGet("isvoted/{commentId:int}")]
-    public async Task<bool> IsVoted(int commentId) {
-        return await commentUpVotesService.IsVotedByUser(commentId, User.GetId());
+    public async Task<CommentVoteStatus> IsVoted(int commentId) {
+        return await commentVotesService.IsVotedByUser(commentId, User.GetId());
     }
 
     [Authorize]
     [HttpPost]
     public async Task Vote([FromBody] CommentVoteDto commentDto) {
-        await commentUpVotesService.VoteAsync(commentDto.CommentId, User.GetId(), commentDto.IsUpVote);
+        await commentVotesService.VoteAsync(commentDto.CommentId, User.GetId(), commentDto.IsUpVote);
     }
 }

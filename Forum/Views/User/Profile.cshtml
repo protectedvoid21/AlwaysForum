@@ -1,18 +1,16 @@
-﻿@using AlwaysForum.Extensions
-@model Data.ViewModels.UserProfileViewModel
+﻿@model Data.ViewModels.UserProfileViewModel
 
 <style>
     .avatar {
         width: 100%;
         height: 100%;
+        object-fit: scale-down;
     }
 
     .avatar-container {
         width: 100px;
         height: 100px;
-        border: 3px solid #bbbbbb;
-        border-radius: 5px;
-        padding: 1%;
+        border: 4px solid #bbbbbb;
         position: relative;
     }
 
@@ -27,13 +25,9 @@
         text-align: center;
     }
 
-    .avatar-container:hover {
-        background-color: #777777;
-    }
+    .avatar-container:hover { background-color: #777777; }
 
-    .avatar-container:hover .change-profile {
-        opacity: 1;
-    }
+    .avatar-container:hover .change-profile { opacity: 1; }
 
     #change-profile-component {
         position: fixed;
@@ -65,16 +59,14 @@
 
 <div class="d-flex gap-4 m-3">
     <div class="avatar-container">
-        <div>
-            @if (string.IsNullOrEmpty(Model.ProfilePicture)) {
-                <img src="/images/default-picture.svg" class="avatar">
-            }
-            else {
-                <img src="/images/userpictures/@Model.ProfilePicture" class="avatar">
-            }
-            <div class="change-profile">
-                <btn class="btn btn-info">Change avatar</btn>
-            </div>
+        @if (string.IsNullOrEmpty(Model.ProfilePicture)) {
+            <img src="/images/default-picture.svg" class="avatar">
+        }
+        else {
+            <img src="/images/userpictures/@Model.ProfilePicture" class="avatar">
+        }
+        <div class="change-profile">
+            <btn class="btn btn-info">Change avatar</btn>
         </div>
     </div>
     <div>
@@ -88,15 +80,16 @@
 @section Scripts {
     <script>
         const changeProfilePictureButton = document.querySelector('.change-profile')
+        const closeProfileChange = document.querySelector('.close')
+        
         const changeProfileComponent = document.getElementById('change-profile-component')
 
         changeProfilePictureButton.addEventListener('click', () => {
-            if (changeProfileComponent.style.display === 'none') {
-                changeProfileComponent.style.display = 'block'
-            } 
-            else {
-                changeProfileComponent.style.display = 'none'
-            }
+            changeProfileComponent.style.display = 'block'
+        })
+
+        closeProfileChange.addEventListener('click', () => {
+            changeProfileComponent.style.display = 'none'
         })
     </script>
 }

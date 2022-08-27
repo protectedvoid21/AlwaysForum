@@ -8,39 +8,39 @@ namespace Tests;
 
 public class CommentUpVotesServiceTests {
     private readonly ForumDbContext dbContext;
-    private readonly CommentUpVotesService commentUpVotesService;
+    private readonly CommentVotesService _commentVotesService;
 
     public CommentUpVotesServiceTests() {
         var options = new DbContextOptionsBuilder<ForumDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString())
             .Options;
         dbContext = new ForumDbContext(options);
 
-        commentUpVotesService = new CommentUpVotesService(dbContext);
+        _commentVotesService = new CommentVotesService(dbContext);
     }
 
     [Fact]
     public async Task Add_NewVote_AddsVoteToDatabaseAndItIsSeenInDb() {
-        await commentUpVotesService.VoteAsync(1, "1", true);
+        await _commentVotesService.VoteAsync(1, "1", true);
 
         Assert.Single(dbContext.CommentUpVotes);
     }
 
     [Fact]
     public async Task TryAdd_ExistingVote_VoteIsDeletedFromDatabase() {
-        await commentUpVotesService.VoteAsync(1, "1", true);
+        await _commentVotesService.VoteAsync(1, "1", true);
 
-        await commentUpVotesService.VoteAsync(1, "1", true);
+        await _commentVotesService.VoteAsync(1, "1", true);
 
         Assert.Empty(dbContext.CommentUpVotes);
     }
 
     [Fact]
     public async Task TryAdd_ExistingVoteWithOtherType_VoteHasChangedItsIsUpVoteProperty() {
-        await commentUpVotesService.VoteAsync(1, "1", true);
+        await _commentVotesService.VoteAsync(1, "1", true);
 
-        await commentUpVotesService.VoteAsync(1, "1", false);
+        await _commentVotesService.VoteAsync(1, "1", false);
 
-        CommentUpVote vote = await dbContext.CommentUpVotes.FirstAsync();
+        CommentVote vote = await dbContext.CommentUpVotes.FirstAsync();
 
         Assert.Single(dbContext.CommentUpVotes);
         Assert.False(vote.IsUpVote);
@@ -48,7 +48,7 @@ public class CommentUpVotesServiceTests {
 
     [Fact]
     public async Task Get_VoteCount_ReturnsUpVotesMinusDownVotes() {
-        CommentUpVote[] votes = {
+        CommentVote[] votes = {
             new() { CommentId = 1, AuthorId = "1", IsUpVote = true },
             new() { CommentId = 1, AuthorId = "2", IsUpVote = true },
             new() { CommentId = 1, AuthorId = "3", IsUpVote = false },
@@ -62,7 +62,7 @@ public class CommentUpVotesServiceTests {
         await dbContext.CommentUpVotes.AddRangeAsync(votes);
         await dbContext.SaveChangesAsync();
 
-        int voteCount = await commentUpVotesService.GetVoteCount(1);
+        int voteCount = await _commentVotesService.GetVoteCount(1);
 
         Assert.Equal(2, voteCount);
     }

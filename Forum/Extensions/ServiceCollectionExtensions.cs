@@ -29,6 +29,6 @@ public static class ServiceCollectionExtensions {
             .AddTransient<IPostsService, PostsService>()
             .AddTransient<IReactionsService, ReactionsService>()
             .AddTransient<ICommentsService, CommentsService>()
-            .AddTransient<ICommentUpVotesService, CommentUpVotesService>();
+            .AddTransient<ICommentVotesService, CommentVotesService>();
     }
 }

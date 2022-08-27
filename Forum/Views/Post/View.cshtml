@@ -16,9 +16,7 @@
         min-height: 50vh;
     }
 
-    .create-comment {
-        margin: 20px;
-    }
+    .create-comment { margin: 20px; }
 
     .comment-list {
         list-style: none;
@@ -36,18 +34,14 @@
         font-weight: bold;
     }
 
-    .voted {
-        color: #ff3535;
-    }
+    .voted { color: #ff3535; }
 
     .non-voted {
         background-color: rgba(0, 0, 0, 0);
         border: 2px solid #9b9b9b
     }
 
-    .vote-arrow .vote-count {
-        line-height: 0;
-    }
+    .vote-arrow .vote-count { line-height: 0; }
 </style>
 
 
@@ -76,34 +70,18 @@
 </div>
 
 <h3><strong>@Model.Comments.Count</strong> Comments</h3>
-@foreach (var comment in Model.Comments) {
-    <ul class="comment-list">
-        <li>
-            <div class="card">
-                <div class="card-header d-flex justify-content-between">
-                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@comment.AuthorId">@comment.Author.UserName</a>
-                    <div>@comment.CreatedTime</div>
-                </div>
-                <div class="d-flex">
-                    <div>
-                        <div>
-                            <div class="d-flex flex-column m-lg-2">
-                                <div class="vote-arrow user-select-none" onclick="addVote(true, @comment.Id)">⬆</div>
-                                <div id="@comment.Id" class="vote-count user-select-none">0</div>
-                                <div class="vote-arrow user-select-none" onclick="addVote(false, @comment.Id)">⬇</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-body">@Html.Raw(comment.Description)</div>
-                </div>
-            </div>
+<ul class="comment-list">
+    @foreach (var comment in Model.Comments) {
+        <li class="mb-3">
+            <partial name="_CommentViewPartial" model="comment"/>
         </li>
-    </ul>
-}
+    }
+</ul>
 
 @section Scripts {
     <script>
         const voteCounts = document.querySelectorAll('.vote-count')
+        const voteContainers = document.querySelectorAll('.vote-container')
 
         async function getVoteCount(commentId) {
             const response = await fetch('https://localhost:7150/api/commentvote/' + commentId)
@@ -124,14 +102,41 @@
                 }),
             })
 
-            const commentVoteCount = document.getElementById(commentId)
+            const voteContainer = document.querySelector(`[data-comment-id="${commentId}"]`)
+            await markVoted(voteContainer, commentId)
+
+            const commentVoteCount = voteContainer.querySelector('.vote-count')
             commentVoteCount.textContent = await getVoteCount(commentId)
         }
 
+        async function isVoted(commentId) {
+            const response = await fetch('https://localhost:7150/api/commentvote/isvoted/' + commentId)
+            return response.json()
+        }
+
+        async function markVoted(voteContainer, commentId) {
+            const voteType = await isVoted(commentId)
+            if (voteType === 0) {
+                voteContainer.querySelectorAll('.vote-arrow').forEach(arrow => {
+                    arrow.classList.remove('text-danger')
+                })
+                return
+            }
+
+            const voteTypeName = voteType === 1 ? 'up' : 'down'
+            const oppositeType = voteType === 1 ? 'down' : 'up'
+
+            voteContainer.querySelector(`[data-arrow-type="${voteTypeName}"]`).classList.add('text-danger')
+            voteContainer.querySelector(`[data-arrow-type="${oppositeType}"]`).classList.remove('text-danger')
+        }
+
         window.onload = async () => {
-            voteCounts.forEach(async (voteCount) => {
-                const commentId = voteCount.id
+            voteContainers.forEach(async (voteContainer) => {
+                const commentId = voteContainer.dataset.commentId
+
+                const voteCount = voteContainer.querySelector('.vote-count')
                 voteCount.textContent = await getVoteCount(commentId)
+                await markVoted(voteContainer, commentId)
             })
         }
     </script>

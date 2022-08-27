@@ -13,5 +13,5 @@ public class Comment {
     
     public DateTime CreatedTime { get; set; }
 
-    public List<CommentUpVote> Votes { get; set; } = new();
+    public List<CommentVote> Votes { get; set; } = new();
 }

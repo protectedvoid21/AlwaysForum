@@ -53,7 +53,7 @@ namespace Data.Migrations
                     b.ToTable("Comments");
                 });
 
-            modelBuilder.Entity("Data.Models.CommentUpVote", b =>
+            modelBuilder.Entity("Data.Models.CommentVote", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -384,7 +384,7 @@ namespace Data.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("Data.Models.CommentUpVote", b =>
+            modelBuilder.Entity("Data.Models.CommentVote", b =>
                 {
                     b.HasOne("Data.Models.ForumUser", "Author")
                         .WithMany()
