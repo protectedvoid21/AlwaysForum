@@ -5,3 +5,4 @@ Simple ASP.NET Core Forum.
 - ASP.NET Core
 - Entity Framework Core (with MSSQL db)
 - XUnit
+- TinyMCE
