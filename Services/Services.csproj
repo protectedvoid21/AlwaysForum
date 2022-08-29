@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <Folder Include="Comments\" />
+    <Folder Include="Messages\" />
     <Folder Include="Users\" />
     <Folder Include="Reactions\" />
   </ItemGroup>

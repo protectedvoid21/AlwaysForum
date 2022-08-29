@@ -61,13 +61,13 @@ public class AccountController : Controller {
             return View();
         }
 
-        MessageViewModel messageModel = new() {
+        InfoViewModel infoModel = new() {
             Title = "Register Success",
             Description = "Now you can log in to your account to start with posting and commenting on AlwaysForum!",
-            MessageType = MessageType.Success,
+            InfoType = InfoType.Success,
         };
 
-        return RedirectToAction("Message", "Home", messageModel);
+        return RedirectToAction("GetInfo", "Home", infoModel);
     }
 
     public async Task<IActionResult> LogOut() {

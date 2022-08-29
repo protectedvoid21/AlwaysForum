@@ -29,9 +29,10 @@ public class SectionController : Controller {
             Description = section.Description,
         };
 
-        IEnumerable<Post> posts = await postsService.GetBySection(sectionId);
+        IEnumerable<Post> posts = (await postsService.GetBySection(sectionId)).OrderByDescending(p => p.CreatedDate);
         List<SectionPostViewModel> postModelsList = new();
 
+        //todo: use mapping
         foreach (var post in posts) {
             string desc = post.Description;
             int substringLength = desc.Length >= GlobalConstants.MaximumPostDescriptionLength ? GlobalConstants.MaximumPostDescriptionLength : desc.Length;

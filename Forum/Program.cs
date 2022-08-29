@@ -1,4 +1,5 @@
 using AlwaysForum.Extensions;
+using AlwaysForum.Hubs;
 using Data;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,7 @@ builder.Services.AddDbContext<ForumDbContext>(config =>
     config.UseSqlServer(builder.Configuration.GetConnectionString("ForumDatabase")));
 builder.Services.AddIdentity();
 builder.Services.AddServices();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -26,6 +28,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.SeedDatabase();
 
+app.MapHub<ChatHub>("/chathub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

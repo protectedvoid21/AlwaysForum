@@ -36,9 +36,7 @@
         }
     }
 
-    window.onload = async () => {
-        await getReactions()
-    }
+    window.onload = getReactions()
 
     async function react(reactionType) {
         const url = `https://localhost:7150/api/reaction/${reactionType}/${@Model}`

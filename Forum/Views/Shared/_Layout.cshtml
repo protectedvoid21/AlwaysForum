@@ -7,6 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AlwaysForum</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -60,7 +62,7 @@
                         <a class="nav-link text-dark" href="#">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="#">Shoutbox</a>
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Chat">Shoutbox</a>
                     </li>
                     @if (User.IsInRole(GlobalConstants.AdminRoleName)) {
                         <li class="nav-item">

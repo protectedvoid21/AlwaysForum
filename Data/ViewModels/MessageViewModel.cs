@@ -1,13 +1,11 @@
 ﻿namespace Data.ViewModels; 
 
 public class MessageViewModel {
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public MessageType MessageType { get; set; }
-}
+    public string AuthorId { get; set; }
 
-public enum MessageType {
-    Success,
-    Error,
-    Warning,
+    public string AuthorName { get; set; }
+    
+    public string Text { get; set; }
+    
+    public string SendDate { get; set; }
 }

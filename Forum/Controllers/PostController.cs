@@ -19,7 +19,7 @@ public class PostController : Controller {
 
     public async Task<IActionResult> View(int postId) {
         Post post = await postsService.GetById(postId);
-        post.Comments = (await commentsService.GetByPost(postId)).ToList();
+        post.Comments = (await commentsService.GetByPost(postId)).OrderByDescending(c => c.CreatedTime).ToList();
 
         if (User.Identity.IsAuthenticated) {
             ViewBag.IsAuthor = await postsService.IsAuthor(postId, User.GetId());
@@ -90,11 +90,11 @@ public class PostController : Controller {
         }
 
         await postsService.DeleteAsync(postId);
-        MessageViewModel messageModel = new() {
+        InfoViewModel infoModel = new() {
             Title = "Success",
             Description = "Post has been successfully deleted",
-            MessageType = MessageType.Success,
+            InfoType = InfoType.Success,
         };
-        return RedirectToAction("Message", "Home", messageModel);
+        return RedirectToAction("GetInfo", "Home", infoModel);
     }
 }

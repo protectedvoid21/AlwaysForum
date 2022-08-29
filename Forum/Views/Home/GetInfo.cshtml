@@ -1,0 +1,16 @@
+﻿@using Data.ViewModels
+@model Data.ViewModels.InfoViewModel
+
+@{
+    string className = Model.InfoType switch {
+        InfoType.Success => "success",
+        InfoType.Warning => "warning",
+        InfoType.Error => "danger",
+        _ => string.Empty 
+        };
+}
+
+<div class="text-center">
+    <h1 class="fw-bold text-@className">@Model.Title</h1>
+    <p>@Model.Description</p>
+</div>

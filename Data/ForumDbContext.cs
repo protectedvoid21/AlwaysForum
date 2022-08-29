@@ -23,4 +23,6 @@ public class ForumDbContext : IdentityDbContext<ForumUser, IdentityRole, string>
     public DbSet<CommentVote> CommentUpVotes { get; set; }
 
     public DbSet<Reaction> Reactions { get; set; }
+
+    public DbSet<Message> Messages { get; set; }
 }
