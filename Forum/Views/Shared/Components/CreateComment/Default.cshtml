@@ -1,10 +1,15 @@
 ﻿@model Data.ViewModels.CommentCreateViewModel
 
-<h3>Share your opinion in a comment</h3>
-<form asp-controller="Comment" asp-action="Create" method="post">
-    <div asp-validation-summary="All"></div>
-    <input asp-for="PostId" hidden/>
-    <textarea asp-for="Description"></textarea>
+@if (User.Identity.IsAuthenticated) {
+    <h3>Share your opinion in a comment</h3>
+    <form asp-controller="Comment" asp-action="Create" method="post">
+        <div asp-validation-summary="All"></div>
+        <input asp-for="PostId" hidden/>
+        <textarea asp-for="Description"></textarea>
     
-    <input type="submit" value="Submit" class="btn btn-success btn-lg m-3"/>
-</form>
+        <input type="submit" value="Submit" class="btn btn-success btn-lg m-3"/>
+    </form>
+}
+else {
+    <h3 class="text-center">To post a comment you need to sign in</h3>
+}

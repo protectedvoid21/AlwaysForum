@@ -1,4 +1,5 @@
-﻿using Data.Models;
+﻿using Data;
+using Data.Models;
 using Data.ViewModels;
 using Data.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
@@ -61,13 +62,7 @@ public class AccountController : Controller {
             return View();
         }
 
-        InfoViewModel infoModel = new() {
-            Title = "Register Success",
-            Description = "Now you can log in to your account to start with posting and commenting on AlwaysForum!",
-            InfoType = InfoType.Success,
-        };
-
-        return RedirectToAction("GetInfo", "Home", infoModel);
+        return InfoHelper.RedirectToMessage("Now you can log in to your account to start with posting and commenting on AlwaysForum!", InfoType.Success);
     }
 
     public async Task<IActionResult> LogOut() {

@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Services.Sections;
 
@@ -25,7 +26,12 @@ public class SectionsService : ISectionsService {
     }
 
     public async Task<IEnumerable<Section>> GetAll() {
-        return dbContext.Sections;
+        return dbContext.Sections
+            .Include(s => s.Posts);
+    }
+
+    public async Task<int> GetPostCount(int id) {
+        return await dbContext.Posts.Where(p => p.SectionId == id).CountAsync();
     }
 
     public async Task UpdateAsync(int id, string name, string description) {

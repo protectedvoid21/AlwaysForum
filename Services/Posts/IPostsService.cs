@@ -7,6 +7,8 @@ public interface IPostsService {
 
     Task<IEnumerable<Post>> GetBySection(int sectionId);
 
+    Task<int> GetCommentCount(int id);
+
     Task<int> AddAsync(string title, string description, string authorId, int sectionId);
 
     Task<bool> IsAuthor(int postId, string authorId);

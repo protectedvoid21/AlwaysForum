@@ -9,6 +9,8 @@ public interface ISectionsService {
 
     Task<IEnumerable<Section>> GetAll();
 
+    Task<int> GetPostCount(int id);
+
     Task UpdateAsync(int id, string name, string description);
 
     Task DeleteAsync(int id);

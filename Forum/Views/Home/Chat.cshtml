@@ -35,8 +35,15 @@
     </div>
 </div>
 <div class="border-1 d-flex">
-    <input id="message-input" class="form-control" placeholder="Write message"/>
-    <btn id="send-button" class="btn btn-success w-25">Send</btn>
+    @if (User.Identity.IsAuthenticated) {
+        <input id="message-input" class="form-control" placeholder="Write message"/>
+        <btn id="send-button" class="btn btn-success w-25">Send</btn>
+    }
+    else {
+        <div class="form-control user-select-none" style="color: #333333">
+            You must log in to be available to send messages
+        </div>
+    }
 </div>
 
 @section Scripts {

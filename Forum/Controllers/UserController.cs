@@ -13,7 +13,7 @@ public class UserController : Controller {
     }
 
     public async Task<IActionResult> Profile(string userId) {
-        var profileModel = await usersService.GetProfile(userId);
+        UserProfileViewModel profileModel = await usersService.GetAsync<UserProfileViewModel>(userId);
         return View(profileModel);
     }
 

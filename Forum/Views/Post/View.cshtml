@@ -1,7 +1,10 @@
 ﻿@model Post
 
 @{
-    bool isAuthor = ViewBag.IsAuthor;
+    bool isAuthor = false;
+    if (ViewBag.IsAuthor != null) {
+        isAuthor = ViewBag.IsAuthor;
+    }
 }
 
 <style>

@@ -16,6 +16,13 @@ public class UsersService : IUsersService {
         this.mapper = mapper;
     }
 
+    public async Task<TUser> GetAsync<TUser>(string id) {
+        var user = await userManager.FindByIdAsync(id);
+        TUser tuser = mapper.Map<TUser>(user);
+
+        return tuser;
+    }
+
     public async Task<UserProfileViewModel> GetProfile(string userId) {
         var user = await userManager.FindByIdAsync(userId);
         UserProfileViewModel profileModel = mapper.Map<UserProfileViewModel>(user);

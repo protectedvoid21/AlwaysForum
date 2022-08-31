@@ -1,8 +1,9 @@
-﻿@model Data.ViewModels.Section.SectionAddViewModel
+﻿@model Data.ViewModels.Section.SectionEditViewModel
 
-<h2>Add new section</h2>
-<p>Type a name for new section</p>
+<h2>Modify '@Model.Name' section</h2>
+<hr/>
 <form method="post">
+    <input asp-for="Id" hidden/>
     <div asp-validation-summary="All"></div>
     <div class="mb-3">
         <span asp-validation-for="Name"></span>

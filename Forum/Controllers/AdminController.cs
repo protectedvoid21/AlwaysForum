@@ -1,11 +1,13 @@
-﻿using Data.ViewModels.Section;
+﻿using Data;
+using Data.Models;
+using Data.ViewModels.Section;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.Sections;
 
 namespace AlwaysForum.Controllers;
 
-[Authorize(Roles = "Admin")]
+[Authorize(Roles = GlobalConstants.AdminRoleName)]
 public class AdminController : Controller {
     private readonly ISectionsService sectionsService;
 
@@ -14,18 +16,4 @@ public class AdminController : Controller {
     }
 
     public ViewResult Panel() => View();
-
-    [HttpGet]
-    public IActionResult AddSection() => View();
-
-    [HttpPost]
-    public async Task<IActionResult> AddSection(SectionAddViewModel sectionModel) {
-        if (!ModelState.IsValid) {
-            return View(sectionModel);
-        }
-
-        await sectionsService.AddAsync(sectionModel.Name, sectionModel.Description);
-
-        return RedirectToAction("Panel");
-    }
 }

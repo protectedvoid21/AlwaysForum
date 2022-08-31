@@ -24,6 +24,10 @@ public class PostsService : IPostsService {
             .Where(p => p.SectionId == sectionId);
     }
 
+    public async Task<int> GetCommentCount(int id) {
+        return await dbContext.Comments.Where(c => c.PostId == id).CountAsync();
+    }
+
     public async Task<int> AddAsync(string title, string description, string authorId, int sectionId) {
         Post post = new() {
             Title = title,

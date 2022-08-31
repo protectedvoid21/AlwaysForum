@@ -1,0 +1,18 @@
+﻿@model Data.ViewModels.Section.SectionCreateViewModel
+
+<h2>Add new section</h2>
+<p>Type a name for new section</p>
+<form method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <span asp-validation-for="Name"></span>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <span asp-validation-for="Description"></span>
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <input class="btn btn-info" type="submit" value="Confirm"/>
+</form>

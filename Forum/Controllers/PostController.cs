@@ -1,4 +1,5 @@
 ﻿using AlwaysForum.Extensions;
+using Data;
 using Data.Models;
 using Data.ViewModels;
 using Data.ViewModels.Post;
@@ -90,11 +91,6 @@ public class PostController : Controller {
         }
 
         await postsService.DeleteAsync(postId);
-        InfoViewModel infoModel = new() {
-            Title = "Success",
-            Description = "Post has been successfully deleted",
-            InfoType = InfoType.Success,
-        };
-        return RedirectToAction("GetInfo", "Home", infoModel);
+        return InfoHelper.RedirectToMessage("Post has been successfully deleted", InfoType.Success);
     }
 }

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Section>
+
+<h2>Section list</h2>
+<a class="btn btn-outline-primary" asp-controller="Section" asp-action="Add"></a>
+<hr/>
+<table class="table table-bordered">
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Post count</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var forumSection in Model) {
+        <tr>
+            <td><a asp-controller="Section" asp-action="View" asp-route-sectionId="@forumSection.Id">@forumSection.Name</a></td>
+            <td>@forumSection.Description</td>
+            <td>@forumSection.Posts.Count</td>
+            <td>
+                <a class="btn btn-outline-dark" asp-controller="Section" asp-action="Edit" asp-route-id="@forumSection.Id">Edit</a>
+                <a class="btn btn-outline-dark" onclick="showWarning(@forumSection.Id)" asp-controller="Section" asp-action="View" asp-route-sectionId="@forumSection.Id">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+
+@section Scripts {
+    <script>
+        function showWarning() {
+            if (confirm('Do you want to delete this section? This action is irreversible.') === false) {
+                event.preventDefault()
+                return
+            }
+        }
+    </script>
+}
