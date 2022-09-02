@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Data;
 
-namespace Data.Seeding;
+namespace AlwaysForum.Seeding;
 
 public class ForumDbContextSeeder : ISeeder {
     public async Task SeedAsync(ForumDbContext dbContext, IServiceProvider serviceProvider) {
@@ -19,6 +15,7 @@ public class ForumDbContextSeeder : ISeeder {
         var seeders = new List<ISeeder> {
             new RoleSeeder(),
             new AdminSeeder(),
+            new ReportTypeSeeder()
         };
 
         foreach (var seeder in seeders) {

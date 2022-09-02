@@ -15,4 +15,6 @@ public static class GlobalConstants {
     public static readonly string[] RequiredRoles = { "Moderator", "User" };
 
     public const int MaximumPostDescriptionLength = 50;
+
+    public static readonly string[] RequiredReportTypes = { "Spam", "Hate speech", "Threats", "Insults", "Harassment" };
 }

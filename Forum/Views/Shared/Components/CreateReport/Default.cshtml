@@ -1,0 +1,38 @@
+﻿@model Data.ViewModels.Report.ReportCreateViewModel
+
+<style>
+    .report-component-container {
+        padding: 20px;
+    }
+</style>
+
+<div class="report-component-container">
+    <h2 class="text-center">Report post</h2>
+    <img src="/images/close.svg" class="close"/>
+    <form asp-controller="Report" asp-action="Create" method="post">
+        <input asp-for="ReportTarget" hidden/>
+        <input asp-for="ObjectId" hidden/>
+        <div class="mb-3">
+            <label>Report type</label>
+            <select asp-for="ReportTypeId">
+                @foreach (var reportType in Model.ReportTypes) {
+                    <option value="@reportType.Id">@reportType.Name</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label asp-for="Description"></label>
+            <textarea asp-for="Description" 
+        data-val-required="This field is required"
+        data-val-maxlength-max="The description cannot be longer than 120 characters"></textarea>
+        </div>
+
+        <input type="submit" value="Send" class="btn btn-success"/>
+    </form>
+</div>
+
+@section Scripts {
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+    <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>
+}

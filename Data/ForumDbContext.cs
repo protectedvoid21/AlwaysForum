@@ -25,4 +25,10 @@ public class ForumDbContext : IdentityDbContext<ForumUser, IdentityRole, string>
     public DbSet<Reaction> Reactions { get; set; }
 
     public DbSet<Message> Messages { get; set; }
+
+    public DbSet<PostReport> PostReports { get; set; }
+
+    public DbSet<CommentReport> CommentReports { get; set; }
+
+    public DbSet<ReportType> ReportTypes { get; set; }
 }

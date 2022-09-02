@@ -1,4 +1,27 @@
-﻿<h2>Administrator panel</h2>
+﻿<style>
+    .panel-container div {
+        display: inline-block;
+    }
+
+    .section {
+        width: 18rem;
+        margin: 20px;
+    }
+</style>
+
+<h2>Administrator panel</h2>
 <hr/>
-<h4>Manage</h4>
-<a class="btn btn-info" asp-controller="Section" asp-action="SectionList">Sections</a>
+<div class="panel-container">
+    <div class="card section">
+        <div class="card-body">
+            <h5>Manage sections</h5>
+            <a class="btn btn-info" asp-controller="Section" asp-action="SectionList">View</a>
+        </div>
+    </div>
+    <div class="card section">
+        <div class="card-body">
+            <h5>Manage reports</h5>
+            <a class="btn btn-info" asp-controller="Report" asp-action="ViewAll">View</a>
+        </div>
+    </div>
+</div>

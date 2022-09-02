@@ -13,6 +13,7 @@
   <ItemGroup>
     <Folder Include="Comments\" />
     <Folder Include="Messages\" />
+    <Folder Include="ReportTypes\" />
     <Folder Include="Users\" />
     <Folder Include="Reactions\" />
   </ItemGroup>

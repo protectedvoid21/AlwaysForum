@@ -1,5 +1,5 @@
-﻿using Data;
-using Data.Seeding;
+﻿using AlwaysForum.Seeding;
+using Data;
 
 namespace AlwaysForum.Extensions;
 

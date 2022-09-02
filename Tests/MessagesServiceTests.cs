@@ -35,9 +35,12 @@ public class MessagesServiceTests {
     public async Task Get_Messages_ReturnsSpecifiedCountOfMessages(int wantedMessageCount, int expectedCount) {
         List<Message> messageList = new();
 
+        ForumUser user = new();
+        await dbContext.AddAsync(user);
+
         for (int i = 0; i < expectedCount; i++) {
             messageList.Add(new Message {
-                AuthorId = "1",
+                AuthorId = user.Id,
                 SendDate = DateTime.Now,
                 Text = i.ToString(),
             });

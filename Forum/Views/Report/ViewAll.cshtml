@@ -1,0 +1,37 @@
+﻿@model Data.ViewModels.Report.ReportsViewModel
+
+<style>
+    .card-title {
+        font-weight: bold;
+    }
+
+    .report-list {
+
+    }
+</style>
+
+<h2>Reports view</h2>
+<p>Posts</p>
+<div class="report-list">
+    @foreach (var postReport in Model.PostReports) {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@postReport.ReportTypeName in post
+                    <a asp-controller="Post" asp-action="View" asp-route-postId="@postReport.PostId">@postReport.PostTitle</a></h5>
+                <div>Reported by : 
+                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@postReport.AuthorId">@postReport.AuthorUserName</a> on @postReport.CreateDate</div>
+                @if (string.IsNullOrEmpty(postReport.Description)) {
+                    <div>No description provided</div>
+                }
+                else {
+                    <div>@Html.Raw(@postReport.Description)</div>
+                }
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-outline-primary" asp-controller="Report" asp-action="RemovePostReport" asp-route-id="@postReport.Id">Remove report</a>
+                <a class="btn btn-outline-danger" asp-controller="Post" asp-action="Delete" asp-route-postId="@postReport.PostId">Delete post</a>
+                <a class="btn btn-outline-danger" href="#">Ban</a>
+            </div>
+        </div>
+    }
+</div>

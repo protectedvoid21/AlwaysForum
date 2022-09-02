@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Data;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.DependencyInjection;
 
-namespace Data.Seeding;
+namespace AlwaysForum.Seeding;
 
 internal class RoleSeeder : ISeeder {
     public async Task SeedAsync(ForumDbContext dbContext, IServiceProvider serviceProvider) { 

@@ -1,4 +1,7 @@
-﻿@model Post
+﻿@using AlwaysForum.Components
+@using Data.ViewModels.Report
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model Post
 
 @{
     bool isAuthor = false;
@@ -45,6 +48,10 @@
     }
 
     .vote-arrow .vote-count { line-height: 0; }
+
+    .report-container {
+        display: none;
+    }
 </style>
 
 
@@ -54,6 +61,16 @@
         <div class="d-flex">
             <a class="btn btn-info m-3" asp-controller="Post" asp-action="Edit" asp-route-postId="@Model.Id">Edit</a>
             <a class="btn btn-danger m-3" asp-controller="Post" asp-action="Delete" asp-route-postId="@Model.Id">Delete</a>
+        </div>
+    }
+    else if(User.Identity.IsAuthenticated) {
+        <div>
+            <a id="report-button" class="btn btn-danger m-3">Report</a>
+            <div id="report-container" class="popup">
+                <div class="component-container">
+                    @await Component.InvokeAsync(typeof(CreateReportViewComponent), new ReportComponentData { ObjectId = Model.Id, ReportTarget = ReportTarget.Post })
+                </div>
+            </div>
         </div>
     }
 </div>
@@ -142,5 +159,18 @@
                 await markVoted(voteContainer, commentId)
             })
         }
+    </script>
+    <script>
+        const reportButton = document.getElementById('report-button')
+        const reportContainer = document.getElementById('report-container')
+        const closeReportButton = document.querySelector('.close')
+
+        reportButton.addEventListener('click', () => {
+            reportContainer.style.display = 'block'
+        })
+
+        closeReportButton.addEventListener('click', () => {
+            reportContainer.style.display = 'none'
+        })
     </script>
 }

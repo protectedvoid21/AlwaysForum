@@ -64,6 +64,37 @@ public class PostsServiceTests {
     }
 
     [Fact]
+    public async Task Get_CommentCount_GetCommentCountUnderPost() {
+        Post post = new() {
+            AuthorId = "1",
+            SectionId = 1,
+            CreatedDate = DateTime.Now,
+            Description = "Desc",
+            Title = "Title"
+        };
+        await dbContext.AddAsync(post);
+        await dbContext.SaveChangesAsync();
+
+        int postId = (await dbContext.Posts.FirstAsync()).Id;
+
+        Comment[] comments = {
+            new Comment { AuthorId = "2", Description = "Desc", CreatedTime = DateTime.Now, PostId = postId },
+            new Comment { AuthorId = "3", Description = "Desc", CreatedTime = DateTime.Now, PostId = postId },
+            new Comment { AuthorId = "4", Description = "Desc", CreatedTime = DateTime.Now, PostId = postId },
+            new Comment {
+                AuthorId = "5", Description = "Desc", CreatedTime = DateTime.Now, PostId = postId - 1 //different post id
+            }, 
+        };
+
+        await dbContext.AddRangeAsync(comments);
+        await dbContext.SaveChangesAsync();
+
+        int commentCount = await postsService.GetCommentCount(postId);
+
+        Assert.Equal(3, commentCount);
+    }
+
+    [Fact]
     public async Task Update_AddedPost_PostShouldHaveChangedData() {
         Post post = new() {
             Title = "Title",

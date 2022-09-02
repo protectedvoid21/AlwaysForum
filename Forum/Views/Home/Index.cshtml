@@ -18,7 +18,7 @@
                     <a asp-controller="Section" asp-action="View" asp-route-sectionId="@sectionForum.Id">@sectionForum.Name</a>
                 </h5>
                 <div class="card-body">
-                    @sectionForum.Description
+                    @Html.Raw(sectionForum.Description)
                 </div>
             </li>
         }
