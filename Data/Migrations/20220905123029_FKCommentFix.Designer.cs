@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220905123029_FKCommentFix")]
+    partial class FKCommentFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -487,7 +489,7 @@ namespace Data.Migrations
                     b.HasOne("Data.Models.ForumUser", "Author")
                         .WithMany("Comments")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Post", "Post")
@@ -504,9 +506,9 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.CommentReport", b =>
                 {
                     b.HasOne("Data.Models.ForumUser", "Author")
-                        .WithMany("CommentsReport")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Comment", "Comment")
@@ -539,7 +541,7 @@ namespace Data.Migrations
                     b.HasOne("Data.Models.Comment", "Comment")
                         .WithMany("CommentVotes")
                         .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -676,8 +678,6 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.ForumUser", b =>
                 {
                     b.Navigation("Comments");
-
-                    b.Navigation("CommentsReport");
 
                     b.Navigation("Posts");
                 });

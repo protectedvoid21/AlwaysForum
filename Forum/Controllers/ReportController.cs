@@ -1,4 +1,5 @@
-﻿using AlwaysForum.Extensions;
+﻿using AlwaysForum.Components;
+using AlwaysForum.Extensions;
 using AutoMapper.Configuration.Annotations;
 using Data;
 using Data.ViewModels;
@@ -41,12 +42,16 @@ public class ReportController : Controller {
     public async Task<IActionResult> ViewAll() {
         ReportsViewModel reportsModel = new() {
             PostReports = await postReportsService.GetAll<PostReportViewModel>(),
-            CommentReports = await commentReportsService.GetAll(),
+            CommentReports = await commentReportsService.GetAll<CommentReportViewModel>(),
         };
 
         return View(reportsModel);
     }
 
+    public IActionResult ReportComment(int id) {
+        return View("ReportComment", id);
+    }
+ 
     [Authorize(Roles = GlobalConstants.AdminRoleName)]
     public async Task<IActionResult> RemovePostReport(int id) {
         await postReportsService.DeleteAsync(id);

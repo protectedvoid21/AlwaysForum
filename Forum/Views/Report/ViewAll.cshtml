@@ -5,33 +5,82 @@
         font-weight: bold;
     }
 
-    .report-list {
-
+    .comment-text {
+        display: none;
     }
 </style>
 
-<h2>Reports view</h2>
-<p>Posts</p>
-<div class="report-list">
-    @foreach (var postReport in Model.PostReports) {
+<h2 class="text-center">Reports view</h2>
+<h3 class="m-3">Posts</h3>
+<div>
+    @foreach (var report in Model.PostReports) {
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title">@postReport.ReportTypeName in post
-                    <a asp-controller="Post" asp-action="View" asp-route-postId="@postReport.PostId">@postReport.PostTitle</a></h5>
+                <h5 class="card-title">@report.ReportTypeName in post
+                    <a asp-controller="Post" asp-action="View" asp-route-postId="@report.PostId">@report.PostTitle</a></h5>
                 <div>Reported by : 
-                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@postReport.AuthorId">@postReport.AuthorUserName</a> on @postReport.CreateDate</div>
-                @if (string.IsNullOrEmpty(postReport.Description)) {
+                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@report.AuthorId">@report.AuthorUserName</a> on @report.CreateDate</div>
+                @if (string.IsNullOrEmpty(report.Description)) {
                     <div>No description provided</div>
                 }
                 else {
-                    <div>@Html.Raw(@postReport.Description)</div>
+                    <div>@Html.Raw(report.Description)</div>
                 }
             </div>
             <div class="card-footer">
-                <a class="btn btn-outline-primary" asp-controller="Report" asp-action="RemovePostReport" asp-route-id="@postReport.Id">Remove report</a>
-                <a class="btn btn-outline-danger" asp-controller="Post" asp-action="Delete" asp-route-postId="@postReport.PostId">Delete post</a>
+                <a class="btn btn-outline-primary" asp-controller="Report" asp-action="RemovePostReport" asp-route-id="@report.Id">Remove report</a>
+                <a class="btn btn-outline-danger" asp-controller="Post" asp-action="Delete" asp-route-postId="@report.PostId">Delete post</a>
                 <a class="btn btn-outline-danger" href="#">Ban</a>
             </div>
         </div>
     }
 </div>
+<h3 class="m-3">Comments</h3>
+<div>
+    @foreach (var report in Model.CommentReports) {
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@report.ReportTypeName in post 
+                    <a asp-controller="Post" asp-action="View" asp-route-postId="@report.PostId">@report.PostTitle</a></h5>
+                <div>Reported by : 
+                    <a asp-controller="User" asp-action="Profile" asp-route-userId="@report.AuthorId">@report.AuthorUserName</a> on @report.CreateDate</div>
+                @if (string.IsNullOrEmpty(report.Description)) {
+                    <div>No description provided</div>
+                }
+                else {
+                    <div>@Html.Raw(report.Description)</div>
+                }
+                <btn data-comment-showtext-id="@report.Id" class="btn btn-outline-info" onclick="toggleCommentText(@report.Id)">Show text</btn>
+                <div data-comment-report-id="@report.Id" class="comment-text m-3">
+                    <h5>Comment text : </h5>
+                    <div>
+                        @Html.Raw(report.CommentText)
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a class="btn btn-outline-primary" asp-controller="Report" asp-action="RemoveCommentReport" asp-route-id="@report.Id">Remove report</a>
+                <a class="btn btn-outline-danger" asp-controller="Comment" asp-action="Delete" asp-route-id="@report.CommentId">Delete comment</a>
+                <a class="btn btn-outline-danger" href="#">Ban</a>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function toggleCommentText(reportId) {
+            const commentText = document.querySelector(`[data-comment-report-id="${reportId}"]`)
+            const showTextButton = document.querySelector(`[data-comment-showtext-id="${reportId}"]`)
+
+            if (commentText.style.display === 'block') {
+                commentText.style.display = 'none'
+                showTextButton.textContent = 'Show text'
+            }
+            else {
+                commentText.style.display = 'block'
+                showTextButton.textContent = 'Hide text'
+            }
+        }
+    </script>
+}

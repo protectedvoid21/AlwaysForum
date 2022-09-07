@@ -9,7 +9,7 @@ public class Post {
 
     public string? AuthorId { get; set; }
 
-    public ForumUser Author{ get; set; }
+    public ForumUser Author { get; set; }
 
     public int? SectionId { get; set; }
 

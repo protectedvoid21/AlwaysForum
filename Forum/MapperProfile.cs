@@ -23,5 +23,9 @@ public class MapperProfile : Profile {
             .ForMember(dest => dest.PostTitle, opt => opt.MapFrom(src => src.Post.Title))
             .ForMember(dest => dest.AuthorUserName, opt => opt.MapFrom(src => src.Author.UserName))
             .ForMember(dest => dest.ReportTypeName, opt => opt.MapFrom(src => src.ReportType.Name));
+        CreateMap<CommentReport, CommentReportViewModel>()
+            .ForMember(dest => dest.CommentText, opt => opt.MapFrom(src => src.Comment.Description))
+            .ForMember(dest => dest.AuthorUserName, opt => opt.MapFrom(src => src.Author.UserName))
+            .ForMember(dest => dest.ReportTypeName, opt => opt.MapFrom(src => src.ReportType.Name));
     }
 }

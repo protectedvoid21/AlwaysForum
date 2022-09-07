@@ -4,6 +4,7 @@ using Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ForumDbContext))]
-    partial class ForumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220904154154_CommentRelationships")]
+    partial class CommentRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -485,15 +487,15 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.Comment", b =>
                 {
                     b.HasOne("Data.Models.ForumUser", "Author")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -504,15 +506,15 @@ namespace Data.Migrations
             modelBuilder.Entity("Data.Models.CommentReport", b =>
                 {
                     b.HasOne("Data.Models.ForumUser", "Author")
-                        .WithMany("CommentsReport")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Data.Models.Comment", "Comment")
                         .WithMany("CommentReports")
                         .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Data.Models.ReportType", "ReportType")
@@ -537,9 +539,9 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.HasOne("Data.Models.Comment", "Comment")
-                        .WithMany("CommentVotes")
+                        .WithMany("Votes")
                         .HasForeignKey("CommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -670,15 +672,11 @@ namespace Data.Migrations
                 {
                     b.Navigation("CommentReports");
 
-                    b.Navigation("CommentVotes");
+                    b.Navigation("Votes");
                 });
 
             modelBuilder.Entity("Data.Models.ForumUser", b =>
                 {
-                    b.Navigation("Comments");
-
-                    b.Navigation("CommentsReport");
-
                     b.Navigation("Posts");
                 });
 

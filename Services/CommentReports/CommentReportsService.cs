@@ -1,4 +1,6 @@
-﻿using Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Data;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,9 +8,11 @@ namespace Services.CommentReports;
 
 public class CommentReportsService : ICommentReportsService {
     private readonly ForumDbContext dbContext;
+    private readonly IMapper mapper;
 
-    public CommentReportsService(ForumDbContext dbContext) {
+    public CommentReportsService(ForumDbContext dbContext, IMapper mapper) {
         this.dbContext = dbContext;
+        this.mapper = mapper;
     }
 
     public async Task AddAsync(int commentId, string authorId, int reportTypeId, string description) {
@@ -28,8 +32,10 @@ public class CommentReportsService : ICommentReportsService {
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<CommentReport>> GetAll() {
-        return dbContext.CommentReports;
+    public async Task<IEnumerable<TModel>> GetAll<TModel>() {
+        return await dbContext.CommentReports
+            .ProjectTo<TModel>(mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 
     public async Task DeleteAsync(int id) {

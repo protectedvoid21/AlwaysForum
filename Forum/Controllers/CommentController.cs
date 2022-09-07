@@ -1,5 +1,6 @@
 ﻿using AlwaysForum.Extensions;
 using Data;
+using Data.Models;
 using Data.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,5 +21,14 @@ public class CommentController : Controller {
         await commentsService.AddAsync(commentModel.Description, commentModel.PostId, User.GetId());
 
         return RedirectToAction("View", "Post", new { postId = commentModel.PostId });
+    }
+
+    public async Task<IActionResult> Delete(int id) {
+        if (!User.IsInRole(GlobalConstants.AdminRoleName) && !await commentsService.IsAuthor(id, User.GetId())) {
+            return Forbid();
+        }
+
+        await commentsService.DeleteAsync(id);
+        return InfoHelper.RedirectToMessage("Comment has been deleted", InfoType.Success);
     }
 }

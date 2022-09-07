@@ -7,7 +7,7 @@
 </style>
 
 <div class="report-component-container">
-    <h2 class="text-center">Report post</h2>
+    <h2 class="text-center">Report @Model.ReportTarget.ToString()</h2>
     <img src="/images/close.svg" class="close"/>
     <form asp-controller="Report" asp-action="Create" method="post">
         <input asp-for="ReportTarget" hidden/>

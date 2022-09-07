@@ -111,16 +111,17 @@
         }
 
         async function addVote(voteType, commentId) {
-            await fetch('https://localhost:7150/api/commentvote', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    commentId: commentId,
-                    isUpVote: voteType,
-                }),
-            })
+            await fetch('https://localhost:7150/api/commentvote',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        commentId: commentId,
+                        isUpVote: voteType,
+                    }),
+                })
 
             const voteContainer = document.querySelector(`[data-comment-id="${commentId}"]`)
             await markVoted(voteContainer, commentId)
@@ -161,6 +162,7 @@
         }
     </script>
     <script>
+        //PostReport
         const reportButton = document.getElementById('report-button')
         const reportContainer = document.getElementById('report-container')
         const closeReportButton = document.querySelector('.close')

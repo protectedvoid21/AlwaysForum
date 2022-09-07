@@ -1,0 +1,6 @@
+﻿@model int
+
+@using AlwaysForum.Components
+@using Data.ViewModels.Report
+
+@await Component.InvokeAsync(typeof(CreateReportViewComponent), new ReportComponentData { ObjectId = Model, ReportTarget = ReportTarget.Comment })

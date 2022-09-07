@@ -1,5 +1,6 @@
 ﻿using Data;
 using Data.Models;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.EntityFrameworkCore;
 using Services.Comments;
@@ -37,6 +38,23 @@ public class CommentsServiceTests {
         IEnumerable<Comment> comments = await commentsService.GetByPost(1);
 
         Assert.Equal(2, comments.Count());
+    }
+
+    [Theory]
+    [InlineData(true, "simpleId", "simpleId")]
+    [InlineData(false, "simpleId", "otherId")]
+    [InlineData(false, "12345", "otherId")]
+    [InlineData(true, "otherId", "otherId")]
+    public async Task Check_Comment_ReturnsTrueIfUserIsAuthorOfComment(bool expected, string authorId, string otherId) {
+        var user = new ForumUser {
+            Id = authorId
+        };
+        await dbContext.AddAsync(user);
+        await commentsService.AddAsync("Desc", 1, authorId);
+
+        Comment comment = await dbContext.Comments.FirstAsync();
+        
+        Assert.Equal(expected, await commentsService.IsAuthor(comment.Id, otherId));
     }
 
     [Theory]

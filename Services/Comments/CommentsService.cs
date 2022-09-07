@@ -28,6 +28,14 @@ public class CommentsService : ICommentsService {
             .Where(c => c.PostId == postId);
     }
 
+    public async Task<bool> IsAuthor(int commentId, string authorId) {
+        Comment? comment = await dbContext.Comments.FindAsync(commentId);
+        if (comment == null) {
+            return false;
+        }
+        return comment.AuthorId == authorId;
+    }
+
     public async Task<int> GetCountInPost(int postId) {
         return await dbContext.Comments.CountAsync(p => p.PostId == postId);
     }
@@ -44,7 +52,10 @@ public class CommentsService : ICommentsService {
     }
 
     public async Task DeleteAsync(int id) {
-        Comment? comment = await dbContext.Comments.FindAsync(id);
+        Comment? comment = await dbContext.Comments
+            .Include(c => c.CommentReports)
+            //.Include(c => c.CommentVotes)
+            .FirstOrDefaultAsync(c => c.Id == id);
         if (comment == null) {
             return;
         }

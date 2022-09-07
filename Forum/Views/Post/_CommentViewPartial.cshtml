@@ -1,21 +1,36 @@
-﻿@model Comment
+﻿@using AlwaysForum.Extensions
+@using AlwaysForum.Components
+@using Data.ViewModels.Report
+@model Comment
 
-<div class="card d-flex flex-row">
-    <div class="card-header d-flex flex-column justify-content-between">
+@{
+    bool isAuthor = Model.AuthorId == User.GetId();
+}
+
+<div class="card flex-row">
+    <div class="card-header">
         <partial name="_UserPicturePartial" model="@Model.Author.ProfilePicture"/>
         <a asp-controller="User" asp-action="Profile" asp-route-userId="@Model.AuthorId">@Model.Author.UserName</a>
         <div>@Model.CreatedTime</div>
     </div>
     <div class="d-flex">
         <div>
-            <div>
-                <div data-comment-id="@Model.Id" class="vote-container d-flex m-lg-2 gap-3">
-                    <div data-arrow-type="up" class="vote-arrow user-select-none" onclick="addVote(true, @Model.Id)">⬆</div>
-                    <div data-comment-id="@Model.Id" class="vote-count user-select-none">0</div>
-                    <div data-arrow-type="down" class="vote-arrow user-select-none" onclick="addVote(false, @Model.Id)">⬇</div>
-                </div>
+            <div data-comment-id="@Model.Id" class="vote-container d-flex m-lg-2 gap-3">
+                <div data-arrow-type="up" class="vote-arrow user-select-none" onclick="addVote(true, @Model.Id)">⬆</div>
+                <div data-comment-id="@Model.Id" class="vote-count user-select-none">0</div>
+                <div data-arrow-type="down" class="vote-arrow user-select-none" onclick="addVote(false, @Model.Id)">⬇</div>
             </div>
         </div>
         <div class="card-body">@Html.Raw(Model.Description)</div>
+        <div>
+            @if (isAuthor) {
+                <a class="btn btn-outline-danger" asp-controller="Comment" asp-action="Delete" asp-route-id="@Model.Id">Delete comment</a>
+            }
+            else {
+                <div>
+                    <a class="btn btn-outline-danger" asp-controller="Report" asp-action="ReportComment" asp-route-id="@Model.Id">Report</a>
+                </div>
+            }
+        </div>
     </div>
 </div>
