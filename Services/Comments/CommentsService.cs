@@ -54,7 +54,6 @@ public class CommentsService : ICommentsService {
     public async Task DeleteAsync(int id) {
         Comment? comment = await dbContext.Comments
             .Include(c => c.CommentReports)
-            //.Include(c => c.CommentVotes)
             .FirstOrDefaultAsync(c => c.Id == id);
         if (comment == null) {
             return;

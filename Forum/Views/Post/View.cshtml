@@ -92,7 +92,7 @@
 <h3><strong>@Model.Comments.Count</strong> Comments</h3>
 <ul class="comment-list">
     @foreach (var comment in Model.Comments) {
-        <li class="mb-3">
+        <li class="mb-3" onmouseover="displayCommentButtons(this, 'visible')" onmouseout="displayCommentButtons(this, 'hidden')">
             <partial name="_CommentViewPartial" model="comment"/>
         </li>
     }
@@ -162,7 +162,6 @@
         }
     </script>
     <script>
-        //PostReport
         const reportButton = document.getElementById('report-button')
         const reportContainer = document.getElementById('report-container')
         const closeReportButton = document.querySelector('.close')
@@ -174,5 +173,9 @@
         closeReportButton.addEventListener('click', () => {
             reportContainer.style.display = 'none'
         })
+
+        function displayCommentButtons(commentContainer, visibilityState) {
+            commentContainer.querySelector('.comment-buttons').style.visibility = visibilityState
+        }
     </script>
 }

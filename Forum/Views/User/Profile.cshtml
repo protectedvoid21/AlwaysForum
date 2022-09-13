@@ -1,4 +1,5 @@
-﻿@model Data.ViewModels.UserProfileViewModel
+﻿@using AlwaysForum.Extensions
+@model Data.ViewModels.UserProfileViewModel
 
 <style>
     .avatar {
@@ -52,6 +53,9 @@
         <h2>@Model.UserName</h2>
         <p>Registered : @Model.CreatedDate</p>
     </div>
+    @if (User.GetId() == Model.Id) {
+        <a asp-controller="Account" asp-action="ChangePassword" class="btn btn-primary">Change password</a>
+    }
 </div>
 <hr/>
 <p>Posts : @Model.PostCount</p>

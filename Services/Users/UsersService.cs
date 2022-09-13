@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Data.Models;
 using Data.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -17,10 +18,10 @@ public class UsersService : IUsersService {
     }
 
     public async Task<TUser> GetAsync<TUser>(string id) {
-        var user = await userManager.FindByIdAsync(id);
-        TUser tuser = mapper.Map<TUser>(user);
-
-        return tuser;
+        return await userManager.Users
+            .Where(u => u.Id == id)
+            .ProjectTo<TUser>(mapper.ConfigurationProvider)
+            .FirstAsync();
     }
 
     public async Task<UserProfileViewModel> GetProfile(string userId) {

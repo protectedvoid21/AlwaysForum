@@ -31,20 +31,7 @@ public class SectionController : Controller {
     }
 
     public async Task<IActionResult> View(int sectionId) {
-        Section section = await sectionsService.GetById(sectionId);
-        SectionViewModel sectionModel = mapper.Map<SectionViewModel>(section);
-
-        IEnumerable<Post> posts = (await postsService.GetBySection(sectionId)).OrderByDescending(p => p.CreatedDate);
-        List<SectionPostViewModel> postModelsList = new();
-
-        foreach (var post in posts) {
-            var postModel = mapper.Map<SectionPostViewModel>(post);
-            postModel.CommentCount = await postsService.GetCommentCount(post.Id);
-
-            postModelsList.Add(postModel);
-        }
-
-        sectionModel.PostsModels = postModelsList;
+        SectionViewModel sectionModel = await sectionsService.GetById<SectionViewModel>(sectionId);
         return View(sectionModel);
     }
 
@@ -70,9 +57,7 @@ public class SectionController : Controller {
 
     [HttpGet, Authorize(Roles = GlobalConstants.AdminRoleName)]
     public async Task<IActionResult> Edit(int id) {
-        Section section = await sectionsService.GetById(id);
-        var sectionModel = mapper.Map<SectionEditViewModel>(section);
-
+        SectionEditViewModel sectionModel = await sectionsService.GetById<SectionEditViewModel>(id);
         return View(sectionModel);
     }
 
@@ -86,9 +71,9 @@ public class SectionController : Controller {
         return RedirectToAction("View", sectionModel.Id);
     }
 
-    [HttpPost, Authorize(Roles = GlobalConstants.AdminRoleName)]
+    [Authorize(Roles = GlobalConstants.AdminRoleName)]
     public async Task<IActionResult> Delete(int id) {
         await sectionsService.DeleteAsync(id);
-        return InfoHelper.RedirectToMessage("Post has been deleted", InfoType.Success);
+        return InfoHelper.RedirectToMessage("Section has been deleted", InfoType.Success);
     }
 }

@@ -60,7 +60,14 @@ public class PostsService : IPostsService {
     }
 
     public async Task DeleteAsync(int id) {
-        Post post = await dbContext.Posts.FindAsync(id);
+        Post? post = await dbContext.Posts
+            .Include(p => p.Comments)
+            .Include(p => p.PostReports)
+            .FirstOrDefaultAsync(p => p.Id == id);
+        if (post == null) {
+            return;
+        }
+
         dbContext.Remove(post);
         await dbContext.SaveChangesAsync();
     }

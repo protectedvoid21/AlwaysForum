@@ -9,7 +9,7 @@ public class Comment {
 
     public Post Post { get; set; }
 
-    public string AuthorId { get; set; }
+    public string? AuthorId { get; set; }
 
     public ForumUser Author { get; set; }
     

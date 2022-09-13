@@ -17,19 +17,9 @@
             <td>@forumSection.Posts.Count</td>
             <td>
                 <a class="btn btn-outline-dark" asp-controller="Section" asp-action="Edit" asp-route-id="@forumSection.Id">Edit</a>
-                <a class="btn btn-outline-dark" onclick="showWarning(@forumSection.Id)" asp-controller="Section" asp-action="View" asp-route-sectionId="@forumSection.Id">Delete</a>
+                <a class="btn btn-outline-dark" onclick="showWarning('Do you want to delete this section? This action is irreversible.')" 
+                   asp-controller="Section" asp-action="Delete" asp-route-id="@forumSection.Id">Delete</a>
             </td>
         </tr>
     }
 </table>
-
-@section Scripts {
-    <script>
-        function showWarning() {
-            if (confirm('Do you want to delete this section? This action is irreversible.') === false) {
-                event.preventDefault()
-                return
-            }
-        }
-    </script>
-}

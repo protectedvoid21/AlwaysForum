@@ -13,12 +13,14 @@ public class MapperProfile : Profile {
             .ForMember(dest => dest.PostCount, opt => opt.MapFrom(src => src.Posts.Count));
         CreateMap<Message, MessageViewModel>()
             .ForMember(dest => dest.SendDate, opt => opt.MapFrom(src => src.SendDate.ToString("G")));
-        CreateMap<Section, SectionViewModel>();
+        CreateMap<Section, SectionViewModel>()
+            .ForMember(dest => dest.PostsModels, opt => opt.MapFrom(src => src.Posts));
         CreateMap<Section, SectionEditViewModel>();
-        /*CreateMap<Section, SectionViewModel>()
-            .ForMember(dest => dest.PostsModels, opt => opt.MapFrom(src => src.Posts));*/
-        CreateMap<Post, SectionPostViewModel>()
-            .ForMember(dest => dest.ShortenedDescription, opt => opt.MapFrom(src => src.Description.Substring(0, src.Description.Length >= GlobalConstants.MaximumPostDescriptionLength ? GlobalConstants.MaximumPostDescriptionLength : src.Description.Length)));
+        CreateMap<Post, SectionPostViewModel>() 
+            .ForMember(dest => dest.ShortenedDescription,
+                opt => opt.MapFrom(src => src.Description.Substring(0, src.Description.Length >= GlobalConstants.MaximumPostDescriptionLength ? GlobalConstants.MaximumPostDescriptionLength : src.Description.Length)))
+            .ForMember(dest => dest.AuthorName, opt => opt.MapFrom(src => src.Author.UserName))
+            .ForMember(dest => dest.CommentCount, opt => opt.MapFrom(src => src.Comments.Count));
         CreateMap<PostReport, PostReportViewModel>()
             .ForMember(dest => dest.PostTitle, opt => opt.MapFrom(src => src.Post.Title))
             .ForMember(dest => dest.AuthorUserName, opt => opt.MapFrom(src => src.Author.UserName))

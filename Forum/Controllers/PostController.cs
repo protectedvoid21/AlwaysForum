@@ -54,10 +54,6 @@ public class PostController : Controller {
     public async Task<IActionResult> Edit(int postId) {
         Post post = await postsService.GetById(postId);
 
-        if (post == null) {
-            return BadRequest();
-        }
-
         if (!await postsService.IsAuthor(postId, User.GetId())) {
             return Forbid();
         }
@@ -86,7 +82,7 @@ public class PostController : Controller {
     }
 
     public async Task<IActionResult> Delete(int postId) {
-        if(!await postsService.IsAuthor(postId, User.GetId())) {
+        if(!await postsService.IsAuthor(postId, User.GetId()) && !User.IsInRole(GlobalConstants.AdminRoleName)) {
             return Forbid();
         }
 

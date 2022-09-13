@@ -65,6 +65,26 @@ public class AccountController : Controller {
         return InfoHelper.RedirectToMessage("Now you can log in to your account to start with posting and commenting on AlwaysForum!", InfoType.Success);
     }
 
+    [HttpGet]
+    public IActionResult ChangePassword() => View();
+
+    [HttpPost]
+    public async Task<IActionResult> ChangePassword(ChangePasswordViewModel passwordModel) {
+        if (!ModelState.IsValid) {
+            return View(passwordModel);
+        }
+
+        ForumUser user = await userManager.GetUserAsync(User);
+
+        var result = await userManager.ChangePasswordAsync(user, passwordModel.CurrentPassword, passwordModel.ConfirmPassword);
+
+        if (result.Succeeded) {
+            return InfoHelper.RedirectToMessage("Password has been changed", InfoType.Success);
+        }
+
+        return InfoHelper.RedirectToMessage("There was some problem. Password could not have been changed", InfoType.Error);
+    }
+
     public async Task<IActionResult> LogOut() {
         await signInManager.SignOutAsync();
         return RedirectToAction("Index", "Home");

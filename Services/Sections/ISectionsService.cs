@@ -5,7 +5,7 @@ namespace Services.Sections;
 public interface ISectionsService {
     Task AddAsync(string name, string description);
 
-    Task<Section> GetById(int id);
+    Task<TSection> GetById<TSection>(int id);
 
     Task<IEnumerable<Section>> GetAll();
 

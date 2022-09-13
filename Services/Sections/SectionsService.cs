@@ -1,4 +1,6 @@
-﻿using Data;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Data;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -6,9 +8,11 @@ namespace Services.Sections;
 
 public class SectionsService : ISectionsService {
     private readonly ForumDbContext dbContext;
+    private readonly IMapper mapper;
     
-    public SectionsService(ForumDbContext dbContext) {
+    public SectionsService(ForumDbContext dbContext, IMapper mapper) {
         this.dbContext = dbContext;
+        this.mapper = mapper;
     }
 
     public async Task AddAsync(string name, string description) {
@@ -20,9 +24,11 @@ public class SectionsService : ISectionsService {
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<Section> GetById(int id) {
-        Section section = await dbContext.Sections.FindAsync(id);
-        return section;
+    public async Task<TSection> GetById<TSection>(int id) {
+        return await dbContext.Sections
+            .Where(s => s.Id == id)
+            .ProjectTo<TSection>(mapper.ConfigurationProvider)
+            .FirstAsync();
     }
 
     public async Task<IEnumerable<Section>> GetAll() {
@@ -44,8 +50,10 @@ public class SectionsService : ISectionsService {
     }
 
     public async Task DeleteAsync(int id) {
-        var section = await dbContext.Sections.FindAsync(id);
-        
+        Section section = await dbContext.Sections
+            .Include(s => s.Posts)
+            .FirstAsync(s => s.Id == id);
+
         dbContext.Remove(section);
         await dbContext.SaveChangesAsync();
     }
