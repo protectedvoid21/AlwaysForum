@@ -3,6 +3,7 @@
 <form asp-controller="Post" asp-action="Edit" method="post">
     <div asp-validation-summary="All"></div>
     <input asp-for="Id" hidden/>
+    <input asp-for="TagList" hidden/>
     <div class="mb-3">
         <span asp-validation-for="Title"></span>
         <label asp-for="Title"></label>
@@ -13,5 +14,24 @@
         <label asp-for="Description"></label>
         <textarea asp-for="Description"></textarea>
     </div>
+    <div class="mb-3">
+        <select asp-for="SelectedTags" id="input-tags">
+            @foreach (var tag in Model.TagList) {
+                <option value="@tag.Id">@tag.Name</option>
+            }
+        </select>
+    </div>
     <input type="submit" value="Submit" class="btn btn-success m-3"/>
 </form>
+
+@section Scripts {
+    <script>
+        $('#input-tags').selectize({
+            plugins: ['remove_button'],
+            delimiter: ',',
+            persist: false,
+            maxItems: 3,
+            create: false
+        })
+    </script>
+}

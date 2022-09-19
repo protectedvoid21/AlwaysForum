@@ -17,6 +17,8 @@ public class PostsService : IPostsService {
     public async Task<Post> GetById(int id) {
         Post post = await dbContext.Posts
             .Include(p => p.Author)
+            .Include(p => p.Tags)
+            .ThenInclude(pt => pt.Tag)
             .FirstAsync(p => p.Id == id);
         return post;
     }
@@ -52,17 +54,23 @@ public class PostsService : IPostsService {
     }
 
     public async Task<bool> IsAuthor(int postId, string authorId) {
-        Post post = await dbContext.Posts.FindAsync(postId);
+        Post? post = await dbContext.Posts.FindAsync(postId);
         if (post == null) {
             return false;
         }
         return post.AuthorId == authorId;
     }
 
-    public async Task UpdateAsync(int id, string title, string description) {
-        Post post = await dbContext.Posts.FindAsync(id);
+    public async Task UpdateAsync(int id, string title, string description, IEnumerable<int> tagIds) {
+        Post? post = await dbContext.Posts.FindAsync(id);
+        if (post == null) {
+            return;
+        }
         post.Title = title;
         post.Description = description;
+
+        tagIds = tagIds.Take(GlobalConstants.MaxTagsOnPost);
+        await tagsService.UpdateTagsOnPost(id, tagIds);
 
         dbContext.Update(post);
         await dbContext.SaveChangesAsync();

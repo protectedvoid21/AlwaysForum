@@ -1,4 +1,5 @@
 ﻿using AlwaysForum.Extensions;
+using AutoMapper;
 using Data;
 using Data.Models;
 using Data.ViewModels;
@@ -14,11 +15,13 @@ public class PostController : Controller {
     private readonly IPostsService postsService;
     private readonly ICommentsService commentsService;
     private readonly ITagsService tagsService;
+    private readonly IMapper mapper;
 
-    public PostController(IPostsService postsService, ICommentsService commentsService, ITagsService tagsService) {
+    public PostController(IPostsService postsService, ICommentsService commentsService, ITagsService tagsService, IMapper mapper) {
         this.postsService = postsService;
         this.commentsService = commentsService;
         this.tagsService = tagsService;
+        this.mapper = mapper;
     }
 
     public async Task<IActionResult> View(int postId) {
@@ -62,11 +65,8 @@ public class PostController : Controller {
             return Forbid();
         }
 
-        PostEditViewModel postModel = new() {
-            Id = postId,
-            Title = post.Title,
-            Description = post.Description,
-        };
+        PostEditViewModel postModel = mapper.Map<PostEditViewModel>(post);
+        postModel.TagList = await tagsService.GetAllAsync();
 
         return View(postModel);
     }
@@ -81,7 +81,7 @@ public class PostController : Controller {
             return Forbid();
         }
 
-        await postsService.UpdateAsync(postModel.Id, postModel.Title, postModel.Description);
+        await postsService.UpdateAsync(postModel.Id, postModel.Title, postModel.Description, postModel.SelectedTags);
         return RedirectToAction("View", "Post", new { postId = postModel.Id });
     }
 

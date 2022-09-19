@@ -10,6 +10,8 @@ public interface ITagsService {
 
     Task UpdateAsync(int id, string name);
 
+    Task UpdateTagsOnPost(int postId, IEnumerable<int> tagIds);
+
     Task<IEnumerable<Tag>> GetAllAsync();
 
     Task<IEnumerable<TagViewModel>> GetTrendingForSection(int sectionId, int count);

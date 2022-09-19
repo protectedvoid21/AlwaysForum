@@ -22,6 +22,11 @@
         min-height: 50vh;
     }
 
+    .tag-container {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
     .create-comment { margin: 20px; }
 
     .comment-list {
@@ -83,6 +88,11 @@
 <hr/>
 
 <div class="description-container">@Html.Raw(Model.Description)</div>
+<div class="tag-container">
+    @foreach (var tag in Model.Tags.Select(pt => pt.Tag)) {
+        <div class="btn btn-sm btn-outline-dark">@tag.Name</div>
+    }
+</div>
 <partial name="_ReactionsPartial" model="@Model.Id"/>
 <hr/>
 <div class="create-comment">

@@ -2,6 +2,7 @@
 using Data;
 using Data.Models;
 using Data.ViewModels;
+using Data.ViewModels.Post;
 using Data.ViewModels.Report;
 using Data.ViewModels.Section;
 
@@ -16,6 +17,8 @@ public class MapperProfile : Profile {
         CreateMap<Section, SectionViewModel>()
             .ForMember(dest => dest.PostsModels, opt => opt.MapFrom(src => src.Posts));
         CreateMap<Section, SectionEditViewModel>();
+        CreateMap<Post, PostEditViewModel>()
+            .ForMember(dest => dest.SelectedTags, opt => opt.MapFrom(src => src.Tags.Select(t => t.TagId)));
         CreateMap<Post, SectionPostViewModel>() 
             .ForMember(dest => dest.ShortenedDescription,
                 opt => opt.MapFrom(src => src.Description.Substring(0, src.Description.Length >= GlobalConstants.MaximumPostDescriptionLength ? GlobalConstants.MaximumPostDescriptionLength : src.Description.Length)))

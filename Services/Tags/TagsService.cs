@@ -17,6 +17,10 @@ public class TagsService : ITagsService {
     }
 
     public async Task AddAsync(string name) {
+        if (await dbContext.Tags.FirstOrDefaultAsync(t => t.Name == name) != null) {
+            return;
+        }
+
         Tag tag = new() {
             Name = name,
         };
@@ -46,6 +50,22 @@ public class TagsService : ITagsService {
         await dbContext.SaveChangesAsync();
     }
 
+    public async Task UpdateTagsOnPost(int postId, IEnumerable<int> tagIds) {
+        IEnumerable<PostTag> existingPostTags = dbContext.PostTags.Where(pt => pt.PostId == postId);
+        dbContext.RemoveRange(existingPostTags);
+
+        List<PostTag> postTags = new();
+        foreach (var tagId in tagIds) {
+            postTags.Add(new PostTag {
+                PostId = postId,
+                TagId = tagId
+            });
+        }
+
+        await dbContext.AddRangeAsync(postTags);
+        await dbContext.SaveChangesAsync();
+    }
+
     public async Task<IEnumerable<Tag>> GetAllAsync() {
         return dbContext.Tags;
     }
@@ -54,6 +74,7 @@ public class TagsService : ITagsService {
         return dbContext.Posts
             .Where(p => p.SectionId == sectionId)
             .SelectMany(p => p.Tags.Select(pt => pt.Tag))
+            .Distinct()
             .ProjectTo<TagViewModel>(mapper.ConfigurationProvider)
             .OrderByDescending(t => t.PostCount)
             .Where(t => t.PostCount > 0)

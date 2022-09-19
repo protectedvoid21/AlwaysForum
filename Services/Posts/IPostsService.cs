@@ -13,7 +13,7 @@ public interface IPostsService {
 
     Task<bool> IsAuthor(int postId, string authorId);
 
-    Task UpdateAsync(int id, string title, string description);
+    Task UpdateAsync(int id, string title, string description, IEnumerable<int> tagIds);
 
     Task DeleteAsync(int id);
 }
