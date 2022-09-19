@@ -70,6 +70,11 @@
                 reactionImages[i].classList.add('non-reacted')
             }
         }
+        else {
+            for (let i = 0; i < 5; i++) {
+                reactionImages[i].classList.add('non-reacted')
+            }
+        }
 
         for (let i = 0; i < 5; i++) {
             reactionTexts[i].textContent = jsonResponse.filter(r => r.reactionType === i).length

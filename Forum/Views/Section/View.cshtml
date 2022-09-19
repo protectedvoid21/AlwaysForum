@@ -55,13 +55,15 @@
                         <a class="fw-bold title" asp-controller="Post" asp-action="View" asp-route-postId="@post.Id">@post.Title</a>
                         @Html.Raw(post.ShortenedDescription)
                     </div>
-                    <div class="d-flex">
+                    <div class="d-flex justify-content-between">
                         <div>
                             @foreach (var tag in post.TagsList) {
-                                <div class="btn btn-outline-success d-inline-block">@tag</div>
+                                <div class="btn-sm btn btn-outline-success d-inline-block">@tag</div>
                             }
                         </div>
-                        <span class="badge bg-primary rounded-pill">@post.CommentCount</span> <em>Replies</em>
+                        <div>
+                            <span class="badge bg-primary rounded-pill">@post.CommentCount</span> <em>Replies</em>
+                        </div>
                     </div>
                 </li>
             }
