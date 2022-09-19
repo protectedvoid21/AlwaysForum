@@ -6,16 +6,19 @@ using Data.ViewModels.Post;
 using Microsoft.AspNetCore.Mvc;
 using Services.Comments;
 using Services.Posts;
+using Services.Tags;
 
 namespace AlwaysForum.Controllers;
 
 public class PostController : Controller {
     private readonly IPostsService postsService;
     private readonly ICommentsService commentsService;
+    private readonly ITagsService tagsService;
 
-    public PostController(IPostsService postsService, ICommentsService commentsService) {
+    public PostController(IPostsService postsService, ICommentsService commentsService, ITagsService tagsService) {
         this.postsService = postsService;
         this.commentsService = commentsService;
+        this.tagsService = tagsService;
     }
 
     public async Task<IActionResult> View(int postId) {
@@ -34,7 +37,8 @@ public class PostController : Controller {
         }
 
         PostCreateViewModel postModel = new() {
-            SectionId = sectionId
+            SectionId = sectionId,
+            TagList = await tagsService.GetAllAsync(),
         };
 
         return View(postModel);
@@ -46,7 +50,7 @@ public class PostController : Controller {
             return View(postModel);
         }
 
-        int createdId = await postsService.AddAsync(postModel.Title, postModel.Description, User.GetId(), postModel.SectionId);
+        int createdId = await postsService.AddAsync(postModel.Title, postModel.Description, User.GetId(), postModel.SectionId, postModel.SelectedTags);
         return RedirectToAction("View", "Post", new { postId = createdId });
     }
 

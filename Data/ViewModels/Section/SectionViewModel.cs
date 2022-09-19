@@ -10,4 +10,6 @@ public class SectionViewModel {
     public string Description { get; set; }
 
     public IEnumerable<SectionPostViewModel> PostsModels { get; set; }
+
+    public IEnumerable<TagViewModel> PopularTags { get; set; }
 }

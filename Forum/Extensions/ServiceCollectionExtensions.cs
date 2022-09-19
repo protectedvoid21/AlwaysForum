@@ -11,6 +11,7 @@ using Services.Posts;
 using Services.Reactions;
 using Services.ReportTypes;
 using Services.Sections;
+using Services.Tags;
 using Services.Users;
 
 namespace AlwaysForum.Extensions;
@@ -37,6 +38,7 @@ public static class ServiceCollectionExtensions {
             .AddTransient<IMessagesService, MessagesService>()
             .AddTransient<IReportTypesService, ReportTypesService>()
             .AddTransient<IPostReportsService, PostReportsService>()
+            .AddTransient<ITagsService, TagsService>()
             .AddTransient<ICommentReportsService, CommentReportsService>();
     }
 }

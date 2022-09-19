@@ -17,4 +17,6 @@ public static class GlobalConstants {
     public const int MaximumPostDescriptionLength = 50;
 
     public static readonly string[] RequiredReportTypes = { "Spam", "Hate speech", "Threats", "Insults", "Harassment" };
+
+    public const int MaxTagsOnPost = 3;
 }

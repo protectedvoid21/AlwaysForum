@@ -1,37 +1,26 @@
-﻿using System.Collections;
-using AutoMapper;
-using Data;
+﻿using Data;
 using Data.Models;
 using Data.ViewModels;
 using Data.ViewModels.Section;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Services.Comments;
-using Services.Posts;
 using Services.Sections;
+using Services.Tags;
 
 namespace AlwaysForum.Controllers;
 
 public class SectionController : Controller {
     private readonly ISectionsService sectionsService;
-    private readonly IPostsService postsService;
-    private readonly ICommentsService commentsService;
-    private readonly IMapper mapper;
+    private readonly ITagsService tagsService;
 
-    public SectionController(
-        ISectionsService sectionsService,
-        IPostsService postsService,
-        ICommentsService commentsService,
-        IMapper mapper) {
+    public SectionController(ISectionsService sectionsService, ITagsService tagsService) {
         this.sectionsService = sectionsService;
-        this.postsService = postsService;
-        this.commentsService = commentsService;
-        this.mapper = mapper;
+        this.tagsService = tagsService;
     }
 
     public async Task<IActionResult> View(int sectionId) {
         SectionViewModel sectionModel = await sectionsService.GetById<SectionViewModel>(sectionId);
+        sectionModel.PopularTags = await tagsService.GetTrendingForSection(sectionId, 5);
         return View(sectionModel);
     }
 
@@ -68,7 +57,7 @@ public class SectionController : Controller {
         }
 
         await sectionsService.UpdateAsync(sectionModel.Id, sectionModel.Name, sectionModel.Description);
-        return RedirectToAction("View", sectionModel.Id);
+        return RedirectToAction("View", new { sectionId = sectionModel.Id });
     }
 
     [Authorize(Roles = GlobalConstants.AdminRoleName)]

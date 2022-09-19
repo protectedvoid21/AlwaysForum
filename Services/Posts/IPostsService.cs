@@ -9,7 +9,7 @@ public interface IPostsService {
 
     Task<int> GetCommentCount(int id);
 
-    Task<int> AddAsync(string title, string description, string authorId, int sectionId);
+    Task<int> AddAsync(string title, string description, string authorId, int sectionId, IEnumerable<int> tagIds);
 
     Task<bool> IsAuthor(int postId, string authorId);
 

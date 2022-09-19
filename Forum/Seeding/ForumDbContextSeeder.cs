@@ -15,7 +15,8 @@ public class ForumDbContextSeeder : ISeeder {
         var seeders = new List<ISeeder> {
             new RoleSeeder(),
             new AdminSeeder(),
-            new ReportTypeSeeder()
+            new ReportTypeSeeder(),
+            new TagSeeder()
         };
 
         foreach (var seeder in seeders) {

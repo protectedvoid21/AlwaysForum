@@ -14,12 +14,12 @@ public class PostsServiceTests {
         var options = new DbContextOptionsBuilder<ForumDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
         dbContext = new ForumDbContext(options);
 
-        postsService = new PostsService(dbContext);
+        postsService = new PostsService(dbContext, null);
     }
 
     [Fact]
     public async Task Get_PostById_ReturnsOnePostWithCertainId() {
-        await postsService.AddAsync("Title", "Description", "authorId", 1);
+        await postsService.AddAsync("Title", "Description", "authorId", 1, null);
 
         int postId = (await dbContext.Posts.FirstAsync()).Id;
         Post post = await postsService.GetById(postId);
@@ -32,10 +32,10 @@ public class PostsServiceTests {
 
     [Fact]
     public async Task Get_AllPosts_ReturnsAllPostsWithinSection() {
-        await postsService.AddAsync("Title1", "Desc1", "1", 1);
-        await postsService.AddAsync("Title2", "Desc2", "2", 1);
-        await postsService.AddAsync("Title3", "Desc3", "1", 1);
-        await postsService.AddAsync("Title4", "Desc4", "1", 2);
+        await postsService.AddAsync("Title1", "Desc1", "1", 1, null);
+        await postsService.AddAsync("Title2", "Desc2", "2", 1, null);
+        await postsService.AddAsync("Title3", "Desc3", "1", 1, null);
+        await postsService.AddAsync("Title4", "Desc4", "1", 2, null);
 
         var posts = await postsService.GetBySection(1);
 
@@ -46,7 +46,7 @@ public class PostsServiceTests {
     [InlineData("SampleTitle", "SampleDescription")]
     [InlineData("LongTitleWithŚĆŚŻ", "")]
     public async Task Add_NewPost_IsVisibleInDatabase(string title, string description) {
-        await postsService.AddAsync(title, description, "authorId", 1);
+        await postsService.AddAsync(title, description, "authorId", 1, null);
 
         Assert.Single(dbContext.Posts);
     }
@@ -56,7 +56,7 @@ public class PostsServiceTests {
     [InlineData("1", "2", false)]
     [InlineData("111", "112", false)]
     public async Task Check_PostAndAuthor_ReturnInformationIfIsAuthorOfPost(string authorId, string otherAuthorId, bool expected) {
-        await postsService.AddAsync("Title", "Desc", authorId, 1);
+        await postsService.AddAsync("Title", "Desc", authorId, 1, null);
 
         bool isAuthor = await postsService.IsAuthor(1, otherAuthorId);
 

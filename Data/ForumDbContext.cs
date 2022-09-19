@@ -12,6 +12,10 @@ public class ForumDbContext : IdentityDbContext<ForumUser, IdentityRole, string>
 
     public DbSet<Post> Posts { get; set; }
 
+    public DbSet<Tag> Tags { get; set; }
+
+    public DbSet<PostTag> PostTags { get; set; }
+
     public DbSet<Comment> Comments { get; set; }
 
     public DbSet<CommentVote> CommentUpVotes { get; set; }

@@ -10,4 +10,9 @@ public class PostCreateViewModel {
     public string Description { get; set; }
     [Required]
     public int SectionId { get; set; }
+
+    [MaxLength(3)]
+    public IEnumerable<int> SelectedTags { get; set; }
+
+    public IEnumerable<Tag> TagList { get; set; }
 }

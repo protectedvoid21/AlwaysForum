@@ -35,13 +35,15 @@
 <div class="d-flex">
     <div class="tag-container">
         <span class="tag-title">Most popular tags</span>
-        <div class="btn btn-outline-success btn-sm">#trendy 203</div>
-        <div class="btn btn-outline-success btn-sm">#better 165</div>
-        <div class="btn btn-outline-success btn-sm">#saul 98</div>
-        <div class="btn btn-outline-success btn-sm">#call 76</div>
+        @foreach (var tag in Model.PopularTags) {
+            <div class="btn btn-outline-success btn-sm">@tag.Name @tag.PostCount</div>
+        }
     </div>
 
     <div class="post-container">
+        @if (!Model.PostsModels.Any()) {
+            <p>Nothing has been posted here yet</p>
+        }
         <ul class="list-group">
             @foreach (var post in Model.PostsModels) {
                 <li class="list-group-item">
@@ -53,7 +55,12 @@
                         <a class="fw-bold title" asp-controller="Post" asp-action="View" asp-route-postId="@post.Id">@post.Title</a>
                         @Html.Raw(post.ShortenedDescription)
                     </div>
-                    <div class="float-end">
+                    <div class="d-flex">
+                        <div>
+                            @foreach (var tag in post.TagsList) {
+                                <div class="btn btn-outline-success d-inline-block">@tag</div>
+                            }
+                        </div>
                         <span class="badge bg-primary rounded-pill">@post.CommentCount</span> <em>Replies</em>
                     </div>
                 </li>

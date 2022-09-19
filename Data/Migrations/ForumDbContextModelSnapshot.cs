@@ -283,6 +283,29 @@ namespace Data.Migrations
                     b.ToTable("PostReports");
                 });
 
+            modelBuilder.Entity("Data.Models.PostTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.HasIndex("TagId");
+
+                    b.ToTable("PostTags");
+                });
+
             modelBuilder.Entity("Data.Models.Reaction", b =>
                 {
                     b.Property<int>("Id")
@@ -346,6 +369,23 @@ namespace Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sections");
+                });
+
+            modelBuilder.Entity("Data.Models.Tag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -595,6 +635,25 @@ namespace Data.Migrations
                     b.Navigation("ReportType");
                 });
 
+            modelBuilder.Entity("Data.Models.PostTag", b =>
+                {
+                    b.HasOne("Data.Models.Post", "Post")
+                        .WithMany("Tags")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Models.Tag", "Tag")
+                        .WithMany("Posts")
+                        .HasForeignKey("TagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("Tag");
+                });
+
             modelBuilder.Entity("Data.Models.Reaction", b =>
                 {
                     b.HasOne("Data.Models.Post", "Post")
@@ -686,9 +745,16 @@ namespace Data.Migrations
                     b.Navigation("PostReports");
 
                     b.Navigation("Reactions");
+
+                    b.Navigation("Tags");
                 });
 
             modelBuilder.Entity("Data.Models.Section", b =>
+                {
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Data.Models.Tag", b =>
                 {
                     b.Navigation("Posts");
                 });

@@ -16,4 +16,6 @@ public class SectionPostViewModel {
     public DateTime CreatedDate { get; set; }
 
     public int CommentCount { get; set; }
+
+    public IEnumerable<string> TagsList { get; set; }
 }

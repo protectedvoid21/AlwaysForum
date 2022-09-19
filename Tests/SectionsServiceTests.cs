@@ -14,7 +14,7 @@ public class SectionsServiceTests {
         var options = new DbContextOptionsBuilder<ForumDbContext>().UseInMemoryDatabase(Guid.NewGuid().ToString()).Options;
         dbContext = new ForumDbContext(options);
 
-        sectionsService = new SectionsService(dbContext);
+        sectionsService = new SectionsService(dbContext, null);
     }
 
     [Theory]
@@ -43,7 +43,7 @@ public class SectionsServiceTests {
         await sectionsService.AddAsync("SampleSection", "Description");
 
         int sectionId = (await dbContext.Sections.FirstAsync()).Id;
-        Section section = await sectionsService.GetById(sectionId);
+        Section section = await sectionsService.GetById<Section>(sectionId);
 
         Assert.Equal("SampleSection", section.Name);
         Assert.Equal("Description", section.Description);

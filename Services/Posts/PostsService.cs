@@ -1,14 +1,17 @@
 ﻿using Data;
 using Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Services.Tags;
 
 namespace Services.Posts; 
 
 public class PostsService : IPostsService {
     private readonly ForumDbContext dbContext;
+    private readonly ITagsService tagsService;
 
-    public PostsService(ForumDbContext dbContext) {
+    public PostsService(ForumDbContext dbContext, ITagsService tagsService) {
         this.dbContext = dbContext;
+        this.tagsService = tagsService;
     }
 
     public async Task<Post> GetById(int id) {
@@ -28,7 +31,7 @@ public class PostsService : IPostsService {
         return await dbContext.Comments.Where(c => c.PostId == id).CountAsync();
     }
 
-    public async Task<int> AddAsync(string title, string description, string authorId, int sectionId) {
+    public async Task<int> AddAsync(string title, string description, string authorId, int sectionId, IEnumerable<int> tagIds) {
         Post post = new() {
             Title = title,
             Description = description,
@@ -36,8 +39,14 @@ public class PostsService : IPostsService {
             SectionId = sectionId,
             CreatedDate = DateTime.Now,
         };
+
         await dbContext.AddAsync(post);
         await dbContext.SaveChangesAsync();
+
+        tagIds = tagIds.Take(GlobalConstants.MaxTagsOnPost);
+        foreach(var tagId in tagIds) {
+            await tagsService.AddToPost(tagId, post.Id);
+        }
 
         return post.Id;
     }
