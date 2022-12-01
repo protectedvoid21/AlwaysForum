@@ -1,7 +1,7 @@
 ﻿using Data.Models;
-using Data.ViewModels;
+using Data.ViewModels.Tag;
 
-namespace Services.Tags; 
+namespace Services.Tags;
 
 public interface ITagsService {
     Task AddAsync(string name);
@@ -11,6 +11,8 @@ public interface ITagsService {
     Task UpdateAsync(int id, string name);
 
     Task UpdateTagsOnPost(int postId, IEnumerable<int> tagIds);
+
+    Task<Tag> GetById(int id);
 
     Task<IEnumerable<Tag>> GetAllAsync();
 

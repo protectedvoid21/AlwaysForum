@@ -2,10 +2,10 @@
 using AutoMapper.QueryableExtensions;
 using Data;
 using Data.Models;
-using Data.ViewModels;
+using Data.ViewModels.Tag;
 using Microsoft.EntityFrameworkCore;
 
-namespace Services.Tags; 
+namespace Services.Tags;
 
 public class TagsService : ITagsService {
     private readonly ForumDbContext dbContext;
@@ -64,6 +64,10 @@ public class TagsService : ITagsService {
 
         await dbContext.AddRangeAsync(postTags);
         await dbContext.SaveChangesAsync();
+    }
+
+    public async Task<Tag> GetById(int id) {
+        return await dbContext.Tags.FindAsync(id);
     }
 
     public async Task<IEnumerable<Tag>> GetAllAsync() {

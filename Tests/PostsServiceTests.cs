@@ -111,7 +111,7 @@ public class PostsServiceTests {
         await dbContext.SaveChangesAsync();
 
         int postId = (await dbContext.Posts.FirstAsync()).Id;
-        await postsService.UpdateAsync(postId, newTitle, newDescription);
+        await postsService.UpdateAsync(postId, newTitle, newDescription, null);
 
         Post updatedPost = await dbContext.Posts.FindAsync(postId);
 

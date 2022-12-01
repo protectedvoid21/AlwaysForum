@@ -21,7 +21,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@report.ReportTypeName in post
-                        <a asp-controller="Post" asp-action="View" asp-route-postId="@report.PostId">@report.PostTitle</a></h5>
+                        <a asp-controller="Post" asp-action="View" asp-route-id="@report.PostId">@report.PostTitle</a></h5>
                     <div>Reported by :
                         <a asp-controller="User" asp-action="Profile" asp-route-userId="@report.AuthorId">@report.AuthorUserName</a> on @report.CreateDate</div>
                     @if (string.IsNullOrEmpty(report.Description)) {
@@ -50,7 +50,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">@report.ReportTypeName in post
-                        <a asp-controller="Post" asp-action="View" asp-route-postId="@report.PostId">@report.PostTitle</a></h5>
+                        <a asp-controller="Post" asp-action="View" asp-route-id="@report.PostId">@report.PostTitle</a></h5>
                     <div>Reported by :
                         <a asp-controller="User" asp-action="Profile" asp-route-userId="@report.AuthorId">@report.AuthorUserName</a> on @report.CreateDate</div>
                     @if (string.IsNullOrEmpty(report.Description)) {

@@ -1,4 +1,5 @@
 ﻿using Data.Models;
+using Data.ViewModels.Post;
 
 namespace Data.ViewModels; 
 
@@ -12,4 +13,6 @@ public class UserProfileViewModel {
     public int PostCount { get; set; }
 
     public DateTime CreatedDate { get; set; }
+
+    public IEnumerable<PostProfileViewModel> Posts { get; set; }
 }

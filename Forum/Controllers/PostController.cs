@@ -24,12 +24,12 @@ public class PostController : Controller {
         this.mapper = mapper;
     }
 
-    public async Task<IActionResult> View(int postId) {
-        Post post = await postsService.GetById(postId);
-        post.Comments = (await commentsService.GetByPost(postId)).OrderByDescending(c => c.CreatedTime).ToList();
+    public async Task<IActionResult> View(int id) {
+        Post post = await postsService.GetById(id);
+        post.Comments = (await commentsService.GetByPost(id)).OrderByDescending(c => c.CreatedTime).ToList();
 
         if (User.Identity.IsAuthenticated) {
-            ViewBag.IsAuthor = await postsService.IsAuthor(postId, User.GetId());
+            ViewBag.IsAuthor = await postsService.IsAuthor(id, User.GetId());
         }
         return View(post);
     }

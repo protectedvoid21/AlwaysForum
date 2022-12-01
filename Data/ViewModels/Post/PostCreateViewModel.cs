@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Data.Models;
 
 namespace Data.ViewModels.Post;
 
@@ -14,5 +13,5 @@ public class PostCreateViewModel {
     [MaxLength(3)]
     public IEnumerable<int> SelectedTags { get; set; }
 
-    public IEnumerable<Tag> TagList { get; set; }
+    public IEnumerable<Models.Tag> TagList { get; set; }
 }

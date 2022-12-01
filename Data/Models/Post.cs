@@ -13,6 +13,8 @@ public class Post {
 
     public int? SectionId { get; set; }
 
+    public Section Section { get; set; }
+
     public DateTime CreatedDate { get; set; }
 
     public List<Reaction> Reactions { get; set; } = new();

@@ -2,19 +2,14 @@
 
 <style>
     .tag-container {
-        width: 20%;
         background-color: #dddddd;
-        border-radius: 5px;
+        border-radius: 3px;
+        margin-top: 15px;
         padding: 15px;
-        margin-right: 15px;
     }
 
     .tag-title {
         margin: 5px;
-    }
-
-    .post-container {
-        width: 50%;
     }
 
     .title {
@@ -32,41 +27,38 @@
 <a class="btn btn-success" asp-controller="Post" asp-action="Add" asp-route-sectionId="@Model.Id"><strong>Add post</strong></a>
 <hr/>
 
-<div class="d-flex">
-    <div class="tag-container">
-        <span class="tag-title">Most popular tags</span>
-        @foreach (var tag in Model.PopularTags) {
-            <div class="btn btn-outline-success btn-sm">@tag.Name @tag.PostCount</div>
+<div class="post-container">
+    @if (!Model.PostsModels.Any()) {
+        <p>Nothing has been posted here yet</p>
+    }
+    <ul class="list-group">
+        @foreach (var post in Model.PostsModels) {
+            <li class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <div class="author">@post.AuthorName</div>
+                    <div>@post.CreatedDate</div>
+                </div>
+                <div class="ms-2 me-auto">
+                    <a class="fw-bold title" asp-controller="Post" asp-action="View" asp-route-id="@post.Id">@post.Title</a>
+                    @Html.Raw(post.ShortenedDescription)
+                </div>
+                <div class="d-flex justify-content-between">
+                    <div>
+                        @foreach (var tag in post.TagsList) {
+                            <div class="btn-sm btn btn-outline-success d-inline-block">@tag</div>
+                        }
+                    </div>
+                    <div>
+                        <span class="badge bg-primary rounded-pill">@post.CommentCount</span> <em>Replies</em>
+                    </div>
+                </div>
+            </li>
         }
-    </div>
-
-    <div class="post-container">
-        @if (!Model.PostsModels.Any()) {
-            <p>Nothing has been posted here yet</p>
-        }
-        <ul class="list-group">
-            @foreach (var post in Model.PostsModels) {
-                <li class="list-group-item">
-                    <div class="d-flex justify-content-between">
-                        <div class="author">@post.AuthorName</div>
-                        <div>@post.CreatedDate</div>
-                    </div>
-                    <div class="ms-2 me-auto">
-                        <a class="fw-bold title" asp-controller="Post" asp-action="View" asp-route-postId="@post.Id">@post.Title</a>
-                        @Html.Raw(post.ShortenedDescription)
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            @foreach (var tag in post.TagsList) {
-                                <div class="btn-sm btn btn-outline-success d-inline-block">@tag</div>
-                            }
-                        </div>
-                        <div>
-                            <span class="badge bg-primary rounded-pill">@post.CommentCount</span> <em>Replies</em>
-                        </div>
-                    </div>
-                </li>
-            }
-        </ul>
-    </div>
+    </ul>
+</div>
+<div class="tag-container">
+    <span class="tag-title">Most popular tags</span>
+    @foreach(var tag in Model.PopularTags) {
+        <div class="btn btn-outline-success btn-sm">@tag.Name @tag.PostCount</div>
+    }
 </div>

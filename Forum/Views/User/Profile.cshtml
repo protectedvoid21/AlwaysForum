@@ -29,6 +29,11 @@
     .avatar-container:hover { background-color: #777777; }
 
     .avatar-container:hover .change-profile { opacity: 1; }
+
+    .post-title {
+        font-size: 1.3em;
+        padding: 10px;
+    }
 </style>
 
 <div id="change-profile-component" class="popup">
@@ -45,9 +50,11 @@
         else {
             <img src="/images/userpictures/@Model.ProfilePicture" class="avatar">
         }
-        <div class="change-profile">
-            <btn class="btn btn-info">Change avatar</btn>
-        </div>
+        @if (User.GetId() == Model.Id) {
+            <div class="change-profile">
+                <btn class="btn btn-info">Change avatar</btn>
+            </div>
+        }
     </div>
     <div>
         <h2>@Model.UserName</h2>
@@ -59,6 +66,17 @@
 </div>
 <hr/>
 <p>Posts : @Model.PostCount</p>
+<div class="last-posts">
+    @foreach (var post in Model.Posts) {
+        <div class="card">
+            <a class="post-title" asp-controller="Post" asp-action="View" asp-route-id="@post.Id">@post.Title</a>
+            <div class="card-body">
+                <a asp-controller="Section" asp-action="View" asp-route-id="@post.SectionId">@post.SectionName</a>
+                <div>@post.CreatedDate</div>
+            </div>
+        </div>
+    }
+</div>
 
 @section Scripts {
     <script>

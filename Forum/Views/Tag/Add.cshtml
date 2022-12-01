@@ -1,0 +1,11 @@
+﻿@model Data.ViewModels.Tag.TagCreateViewModel
+
+<form method="post">
+    <div asp-validation-summary="All"></div>
+    <div class="mb-3">
+        <span asp-validation-for="Name"></span>
+        <label asp-for="Name"></label>
+        <input asp-for="Name" class="form-control"/>
+    </div>
+    <input type="submit" class="btn btn-dark"/>
+</form>

@@ -5,34 +5,45 @@
         width: 100%;
         height: 500px;
         background-color: #e3e3e3;
-        padding: 5px;
+        padding: 10px;
+        overflow-y: scroll;2
     }
 
-    .message-list {
-        list-style: none;
-        margin: 5px;
-    }
-
-    .message {
-        background-color: #b8fbff;
+    .user-message {
+        background-color: #01c1d9;
+        color: white;
         border-radius: 3px;
         margin: 3px;
         padding: 5px;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .author-nick {
+        color: white;
+        font-weight: bold;
+    }
+
+    .message-text {
+        word-break: break-word;
     }
 </style>
 
-<h1 class="text-center">Shoutbox</h1>
+<h1 class="text-center">Shoutbox</h1>   
 <hr/>
 <div class="message-container border-2">
-    <div class="message-list">
-        @foreach (var message in Model) {
-            <div class="message">
-                @message.SendDate 
-                <a asp-controller="User" asp-action="Profile" asp-route-userId="@message.AuthorId">@message.Author.UserName</a>
-                 @message.Text 
+    @foreach (var message in Model) {
+        <div class="user-message">
+            <div>
+                <a asp-controller="User" asp-action="Profile" asp-route-userId="@message.AuthorId" 
+                    class="author-nick">@message.Author.UserName</a>
+                <div class="message-text">@message.Text</div>
             </div>
-        }
-    </div>
+            <div class="send-date">@message.SendDate</div>
+        </div>
+    }
 </div>
 <div class="border-1 d-flex">
     @if (User.Identity.IsAuthenticated) {
@@ -50,17 +61,27 @@
     <script>
         let connection = new signalR.HubConnectionBuilder().withUrl('/chathub').build()
         const messageInput = document.getElementById('message-input')
+        const messageContainer = document.querySelector('.message-container')
+
+        messageContainer.scrollTop = messageContainer.scrollHeight
 
         document.getElementById('send-button').disabled = true
 
         connection.on('ReceiveMessage',
             function(message) {
                 const listMessage = document.createElement("div")
-                listMessage.classList.add('message')
+                listMessage.classList.add('user-message')
 
-                document.querySelector('.message-list').appendChild(listMessage)
-                const convertedHtml = `${message.sendDate} <a href="/User/Profile?userId=${message.authorId}">${message.authorName}</a> ${message.text}`
+                messageContainer.appendChild(listMessage)
+                const convertedHtml = `
+                <div>
+                <a href="/User/Profile?userId=${message.authorId}" class="author-nick">${message.authorName}</a>
+                <div class="message-text">${message.text}</div>
+                </div>
+                <div class="send-date">${message.sendDate}</div>`
                 listMessage.innerHTML = convertedHtml
+
+                messageContainer.scrollTop = messageContainer.scrollHeight
             })
 
         connection.start().catch((err) => {

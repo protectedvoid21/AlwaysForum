@@ -14,5 +14,5 @@ public class PostEditViewModel {
     [MaxLength(GlobalConstants.MaxTagsOnPost)]
     public IEnumerable<int> SelectedTags { get; set; }
 
-    public IEnumerable<Tag> TagList { get; set; }
+    public IEnumerable<Models.Tag> TagList { get; set; }
 }
