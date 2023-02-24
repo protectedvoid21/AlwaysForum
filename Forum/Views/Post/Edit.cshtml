@@ -15,12 +15,15 @@
         <textarea asp-for="Description"></textarea>
     </div>
     <div class="mb-3">
+        <label>Tags</label>
+        <span asp-validation-for="SelectedTags"></span>
         <select asp-for="SelectedTags" id="input-tags">
             @foreach (var tag in Model.TagList) {
                 <option value="@tag.Id">@tag.Name</option>
             }
         </select>
     </div>
+    <input asp-for="TagList" hidden />
     <input type="submit" value="Submit" class="btn btn-success m-3"/>
 </form>
 

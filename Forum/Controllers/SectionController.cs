@@ -40,7 +40,7 @@ public class SectionController : Controller {
 
     [Authorize(Roles = GlobalConstants.AdminRoleName)]
     public async Task<IActionResult> SectionList() {
-        IEnumerable<Section> sectionList = await sectionsService.GetAll();
+        var sectionList = await sectionsService.GetAll<Section>();
         return View(sectionList);
     }
 

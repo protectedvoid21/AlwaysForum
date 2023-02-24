@@ -16,6 +16,10 @@ public class SectionsService : ISectionsService {
     }
 
     public async Task AddAsync(string name, string description) {
+        if(await dbContext.Sections.AnyAsync(s => s.Name == name)) {
+            return;
+        }
+
         Section section = new() {
             Name = name,
             Description = description
@@ -31,9 +35,8 @@ public class SectionsService : ISectionsService {
             .FirstAsync();
     }
 
-    public async Task<IEnumerable<Section>> GetAll() {
-        return dbContext.Sections
-            .Include(s => s.Posts);
+    public async Task<IEnumerable<TModel>> GetAll<TModel>() {
+        return dbContext.Sections.ProjectTo<TModel>(mapper.ConfigurationProvider);
     }
 
     public async Task<int> GetPostCount(int id) {

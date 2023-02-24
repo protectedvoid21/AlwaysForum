@@ -82,7 +82,7 @@ public class PostController : Controller {
         }
 
         await postsService.UpdateAsync(postModel.Id, postModel.Title, postModel.Description, postModel.SelectedTags);
-        return RedirectToAction("View", "Post", new { postId = postModel.Id });
+        return RedirectToAction("View", "Post", new { id = postModel.Id });
     }
 
     public async Task<IActionResult> Delete(int postId) {

@@ -1,31 +1,37 @@
-﻿@model IEnumerable<Section>
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model IEnumerable<Data.ViewModels.Section.SectionStartViewModel>
 
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <style>
+    .table-legend {
+        margin-bottom: 10px;
+    }
+    
     .forum-section {
         border: 1px solid rgba(0, 0, 0, 0.3);
         border-radius: 4px;
         padding: 5px;
         margin-bottom: 5px;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
     }
 
     .section-title {
         padding: 5px;
+        padding-left: 20px;
         margin-left: 10px;
         font-weight: bold;
         font-size: 1.8em;
     }
 
     .section-description {
-        margin: 10px;
-        margin-left: 5%;
         font-size: 1.1em;
+    }
+
+    .post-count {
+        text-align: center;
+        font-weight: bold;
     }
 </style>
 
@@ -36,16 +42,30 @@
     <hr/>
 </div>
 <div>
-    <ul class="w-100">
+    <table class="w-100">
+        <tr class="table-legend">
+            <th>Name</th>
+            <th>Description</th>
+            <th>Post count</th>
+            <th>Last posted</th>
+        </tr>
         @foreach (var sectionForum in Model) {
-            <li class="forum-section">
-                <div class="section-title">
+            <tr class="forum-section">
+                <td class="section-title">
                     <a asp-controller="Section" asp-action="View" asp-route-sectionId="@sectionForum.Id">@sectionForum.Name</a>
-                </div>
-                <div class="section-description">
+                </td>
+                <td class="section-description">
                     @Html.Raw(sectionForum.Description)
-                </div>
-            </li>
+                </td>
+                <td class="text-center">
+                    <div>Posts</div>
+                    <div class="post-count">@sectionForum.PostCount</div>
+                </td>
+                <td class="last-post-container">
+                    <div>Last post</div>
+                    <a asp-controller="Post" asp-action="View" asp-route-id="@sectionForum.LastPostId">@sectionForum.LastPostTitle</a>
+                </td>
+            </tr>
         }
-    </ul>
+    </table>
 </div>

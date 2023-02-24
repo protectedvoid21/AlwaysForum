@@ -1,6 +1,7 @@
 using AlwaysForum.Extensions;
 using AlwaysForum.Hubs;
 using Data;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

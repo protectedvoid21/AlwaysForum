@@ -7,7 +7,7 @@ public interface ISectionsService {
 
     Task<TSection> GetById<TSection>(int id);
 
-    Task<IEnumerable<Section>> GetAll();
+    Task<IEnumerable<TModel>> GetAll<TModel>();
 
     Task<int> GetPostCount(int id);
 

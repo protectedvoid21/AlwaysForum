@@ -33,7 +33,7 @@ public class SectionsServiceTests {
             new Section { Name = "Section3", Description = "Desc3" });
 
         await dbContext.SaveChangesAsync();
-        var sectionList = await sectionsService.GetAll();
+        var sectionList = await sectionsService.GetAll<Section>();
 
         Assert.Equal(3, sectionList.Count());
     }

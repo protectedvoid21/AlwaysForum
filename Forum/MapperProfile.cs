@@ -16,6 +16,11 @@ public class MapperProfile : Profile {
             .ForMember(dest => dest.PostCount, opt => opt.MapFrom(src => src.Posts.Count));
         CreateMap<Message, MessageViewModel>()
             .ForMember(dest => dest.SendDate, opt => opt.MapFrom(src => src.SendDate.ToString("G")));
+
+        CreateMap<Section, SectionStartViewModel>()
+            .ForMember(dest => dest.LastPostId, opt => opt.MapFrom(src => src.Posts.First().Id))
+            .ForMember(dest => dest.LastPostTitle, opt => opt.MapFrom(src => src.Posts.First().Title))
+            .ForMember(dest => dest.PostCount, opt => opt.MapFrom(src => src.Posts.Count));
         CreateMap<Section, SectionViewModel>()
             .ForMember(dest => dest.PostsModels, opt => opt.MapFrom(src => src.Posts));
         CreateMap<Section, SectionEditViewModel>();

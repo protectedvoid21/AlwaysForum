@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Data.Models;
 using Data.ViewModels;
+using Data.ViewModels.Section;
 using Microsoft.AspNetCore.Mvc;
 using Services.Messages;
 using Services.Sections;
@@ -17,7 +18,7 @@ public class HomeController : Controller {
     }
 
     public async Task<IActionResult> Index() {
-        var sectionList = await sectionsService.GetAll();
+        var sectionList = await sectionsService.GetAll<SectionStartViewModel>();
         return View(sectionList);
     }
 
